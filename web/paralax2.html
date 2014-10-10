@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<title>Parallax</title>
+	    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>     
+	    <script src="js/svg.min.js"></script>     
+       
+
+        <style type="text/css">
+			#starfield svg{
+				border: 1px solid red;
+			}
+		
+
+		</style>
+    </head>
+    
+
+    <body>
+   
+   	<div id="starfield">
+   		
+   	</div> 
+
+
+
+	
+	<script type="text/javascript">
+
+$(document).ready(function(){
+	var field = {
+		width: $(window).width(),
+		height: $(window).height()
+	};
+
+	var origin = {
+		x: Math.round( field.width/2 ),
+		y: Math.round( field.height/2 ),
+		z: 100
+	};
+
+	var eye = {
+		x: Math.round( field.width/2 ),
+		y: Math.round( field.height/2 ),
+		z: 1
+	};
+
+	var stars = [
+		// {
+		// 	start_x: 100,
+		// 	start_y: 100,
+		// 	x: null,
+		// 	y: null,
+		// 	z: 10,
+		// 	radius: 5,
+		// 	color: '#ff0000',
+		// 	svg_element: null
+		// },
+		// {
+		// 	start_x: 10,
+		// 	start_y: 10,
+		// 	x: null,
+		// 	y: null,
+		// 	z: 40,
+		// 	radius: 5,
+		// 	color: '#ff0000',
+		// 	svg_element: null
+		// }
+	];
+
+	for( i=0; i< 100; i++ ){
+		var z = Math.floor( Math.random() * origin.z );
+		stars[i] = 		{
+			start_x: Math.floor( Math.random() * field.width ),
+			start_y: Math.floor( Math.random() * field.height ),
+			x: null,
+			y: null,
+			z: z,
+			radius: z * ( 30/ origin.z ),
+			color: 'rgb(' + Math.floor( Math.random() * 255 ) + ',' + Math.floor( Math.random() * 255 ) + ',' + Math.floor( Math.random() * 255 ) + ')',
+			svg_element: null
+		};
+
+	}
+
+
+	//initialize the field
+	var svg_starfield = SVG('starfield').size(field.width, field.height);
+	$( stars ).each(function(i, star){
+		
+		star.svg_element = svg_starfield.circle(star.radius)
+			.move( star.start_x, star.start_y )
+			.attr({ fill: star.color });
+		star.x = star.start_x;
+		star.y = star.start_y;
+	});
+
+	function updateField(){
+		
+		//Calculate the angle that we'll use to set the new X-coords of the paralax items
+		angleX = (eye.x - origin.x) / origin.z;
+		angleY = (eye.y - origin.y) / origin.z;
+
+		// console.log('Angle X: ' + angleX + ' Angle Y: ' + angleY);
+		//calculate the coords of each paralax-item based on the current angle
+
+		$( stars ).each(function(i, star){
+			
+			// find the offset of the element within its plane
+			star.x = ( angleX * star.z ) + origin.x - (origin.x - star.start_x );
+			star.y = ( angleY * star.z ) + origin.y - (origin.y - star.start_y );
+
+			star.svg_element.move( star.x, star.y );
+
+		});
+
+	}
+	updateField();
+
+	$('#starfield svg').mousemove(function(event){
+		eye.x = event.pageX;
+		eye.y = event.pageY;
+
+		updateField();
+
+	});
+
+	
+});
+
+
+	</script>
+
+    </body>
+	
+</html>
