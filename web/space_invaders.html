@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="/css/css.css" rel="stylesheet" type="text/css">    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>     
+    <script src="/js/game-elements.js"></script>
+
+
+</head>
+<body>
+   
+    
+<script>
+var launcher;
+var fleet;
+var missile =  null;
+var game_screen = null;
+var now = 0;
+var oldTime = 0;
+    window.onload = function () {
+        game_screen = new GameScreen();
+        document.body.appendChild(game_screen.dom_element);
+        launcher =  new Launcher(game_screen);
+        fleet = new Fleet(game_screen, 50);
+        
+
+        this.onkeydown = function(e) { 
+            //make launcher go right               
+            if (e.keyCode == 39) {                
+                launcher.goRight(); 
+            
+            //make launcher go left
+            } else if (e.keyCode == 37){                
+                launcher.goLeft(); 
+
+            //launcher fires a missile
+            }  else if (e.keyCode == 38)  {                
+                missile = launcher.fireMissile();                
+                game_screen.launcherMissiles.push(missile);
+            }
+            
+        }
+
+
+
+        function upDateGame(){
+
+            //Move the launcher missiles
+            for (var i = 0; i < game_screen.launcherMissiles.length; i++) {
+                //if a missile goes off the screen remove it from the array and hide it somehow
+                if(game_screen.launcherMissiles[i].getY() <= -9 ){
+                    game_screen.launcherMissiles[i].dom_element.style.visibility = "hidden";
+                    game_screen.launcherMissiles.shift();
+                }
+                if( typeof game_screen.launcherMissiles[i] != "undefined"){
+                    game_screen.launcherMissiles[i].goUp();
+                }
+            }
+           
+            // Move the fleet
+            fleet.move();
+
+            //Randomly Fire - at a frequency dictated by the state of the fame
+
+            now = Date.now(); // new date with number of milliseconds since 1970            
+            var timeDif = now - oldTime;
+            if ( timeDif > fleet.missileFrequency ){ 
+                game_screen.invaderMissiles.push(fleet.randomFire());
+                oldTime = now; //reset oldTime to now
+            }
+
+
+            //Move the bombs down
+            for (var i = 0; i < game_screen.invaderMissiles.length; i++) {
+                //if a missile goes off the screen remove it from the array and hide it somehow
+                if(game_screen.invaderMissiles[i].getY() <= -9 ){
+                    game_screen.invaderMissiles[i].dom_element.style.visibility = "hidden";
+                    game_screen.invaderMissiles.shift();
+                }
+                if( typeof game_screen.invaderMissiles[i] != "undefined"){                                        
+                    game_screen.invaderMissiles[i].goDown();
+                }
+            }
+
+
+
+            //check for collisions and handle appropriately
+
+                //For all launcher game_screen.launcherMissiles -   did you hit an invader?
+            if(game_screen.launcherMissiles.length > 0){
+                for (var i = 0; i < game_screen.launcherMissiles.length; i++) {
+                        if (fleet.overlaps(game_screen.launcherMissiles[i])) {
+                            game_screen.launcherMissiles.splice(i, 1);
+
+                        };
+                }
+            }
+
+                //For all invader missiles  -   did you hit  the launcher or a bunker??
+            if(game_screen.invaderMissiles.length > 0){
+                for (var i = 0; i < game_screen.invaderMissiles.length; i++) {
+                    if (launcher.overlaps(game_screen.invaderMissiles[i])) {
+                        game_screen.launcherMissiles.splice(i, 1);
+                        
+                    };
+                    // if (bunkers.overlaps(game_screen.invaderMissiles[i])) {
+                    //         game_screen.launcherMissiles.splice(i, 1);
+                        
+                    // };
+                    
+                }
+            }
+            
+                
+
+            //check all game conditions are still valid and if not clear the game_interval so it stops doing stuff. then have a little game over joby thing?
+            // if(launcher.lives <= 0){
+            //     game_intveral = null;
+            // }
+
+            
+
+        };
+
+
+        //this is the game God thingy mabobby
+        var game_interval = setInterval( upDateGame, 25 ); 
+
+    };
+
+    
+
+</script>
+
+</body>
+</html>

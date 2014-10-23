@@ -1,0 +1,47 @@
+#game_screen{
+    width: 900px;
+    height: 500px;
+    background-color: gray;
+    position: relative;
+    left: 0px;
+    top: 0px;
+
+}
+
+#launcher{
+    background-color: blue;
+    position: relative;
+    width: 50px;
+    height: 30px;  
+    left: 0px;
+    top: 0px;
+}
+
+
+.missile{
+    background-color: red;
+    position: absolute;
+    width: 3px;
+    height: 10px;
+    left: 0px;
+    top: 0px;    
+}
+
+
+.invader{
+    background-color: white;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    left: 0px;
+    top: 0px;
+    box-shadow: 5px 5px 5px #5C5C5C;
+}
+
+#fleet{
+    position: absolute;
+    width: 0px;
+    height: 230px;
+    top: 0px;
+    left: 0;
+}
