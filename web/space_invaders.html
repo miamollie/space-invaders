@@ -3,8 +3,13 @@
 <head>
     <link href="/css/css.css" rel="stylesheet" type="text/css">    
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>     
-    <script src="/js/game-elements.js"></script>
-
+    <script src="/js/super.js"></script>
+    <script src="/js/gameScreen.js"></script>
+    <script src="/js/invader.js"></script>
+    <script src="/js/launcher.js"></script>
+    <script src="/js/fleet.js"></script>
+    <script src="/js/missile.js"></script>
+    
 
 </head>
 <body>
@@ -21,7 +26,7 @@ var oldTime = 0;
         game_screen = new GameScreen();
         document.body.appendChild(game_screen.dom_element);
         launcher =  new Launcher(game_screen);
-        fleet = new Fleet(game_screen, 50);
+        fleet = new Fleet(game_screen, 10);
         
 
         this.onkeydown = function(e) { 
@@ -47,18 +52,17 @@ var oldTime = 0;
 
             //Move the launcher missiles
             for (var i = 0; i < game_screen.launcherMissiles.length; i++) {
+                game_screen.launcherMissiles[i].goUp();
+                
                 //if a missile goes off the screen remove it from the array and hide it somehow
                 if(game_screen.launcherMissiles[i].getY() <= -9 ){
                     game_screen.launcherMissiles[i].dom_element.style.visibility = "hidden";
                     game_screen.launcherMissiles.shift();
                 }
-                if( typeof game_screen.launcherMissiles[i] != "undefined"){
-                    game_screen.launcherMissiles[i].goUp();
-                }
             }
            
             // Move the fleet
-            fleet.move();
+            // fleet.move();
 
             //Randomly Fire - at a frequency dictated by the state of the fame
 
@@ -72,14 +76,13 @@ var oldTime = 0;
 
             //Move the bombs down
             for (var i = 0; i < game_screen.invaderMissiles.length; i++) {
+                game_screen.invaderMissiles[i].goDown();
+                
                 //if a missile goes off the screen remove it from the array and hide it somehow
                 if(game_screen.invaderMissiles[i].getY() <= -9 ){
                     game_screen.invaderMissiles[i].dom_element.style.visibility = "hidden";
                     game_screen.invaderMissiles.shift();
-                }
-                if( typeof game_screen.invaderMissiles[i] != "undefined"){                                        
-                    game_screen.invaderMissiles[i].goDown();
-                }
+                }                
             }
 
 
@@ -89,10 +92,12 @@ var oldTime = 0;
                 //For all launcher game_screen.launcherMissiles -   did you hit an invader?
             if(game_screen.launcherMissiles.length > 0){
                 for (var i = 0; i < game_screen.launcherMissiles.length; i++) {
-                        if (fleet.overlaps(game_screen.launcherMissiles[i])) {
+                    for (var j = 0; j < fleet.invaders.length; j++) {
+                        if (fleet.invaders[j].overlaps(game_screen.launcherMissiles[i])) {
+                            console.log("here second?");
                             game_screen.launcherMissiles.splice(i, 1);
-
                         };
+                    };
                 }
             }
 
@@ -100,8 +105,7 @@ var oldTime = 0;
             if(game_screen.invaderMissiles.length > 0){
                 for (var i = 0; i < game_screen.invaderMissiles.length; i++) {
                     if (launcher.overlaps(game_screen.invaderMissiles[i])) {
-                        game_screen.launcherMissiles.splice(i, 1);
-                        
+                        game_screen.invaderMissiles.splice(i, 1);
                     };
                     // if (bunkers.overlaps(game_screen.invaderMissiles[i])) {
                     //         game_screen.launcherMissiles.splice(i, 1);
