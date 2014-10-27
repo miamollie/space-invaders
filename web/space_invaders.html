@@ -16,36 +16,36 @@
    
     
 <script>
-var launcher;
-var fleet;
-var missile =  null;
-var game_screen = null;
-var now = 0;
-var oldTime = 0;
+
+    var launcher;
+    var fleet;
+    var missile =  null;
+    var game_screen = null;
+    var now = 0;
+    var oldTime = 0;
+        
     window.onload = function () {
         game_screen = new GameScreen();
         document.body.appendChild(game_screen.dom_element);
         launcher =  new Launcher(game_screen);
         fleet = new Fleet(game_screen, 10);
         
-
         this.onkeydown = function(e) { 
-            //make launcher go right               
-            if (e.keyCode == 39) {                
-                launcher.goRight(); 
-            
+            //make launcher go right
+            if (e.keyCode == 39) {              
+                launcher.goRight();
+
             //make launcher go left
-            } else if (e.keyCode == 37) {                
-                launcher.goLeft(); 
+            } else if (e.keyCode == 37) {
+                launcher.goLeft();
 
             //launcher fires a missile
-            }  else if (e.keyCode == 38) {                
-                missile = launcher.fireMissile();                
+            }  else if (e.keyCode == 38) {
+                missile = launcher.fireMissile();
                 game_screen.launcherMissiles.push(missile);
             }
             
         }
-
 
 
         function upDateGame(){
@@ -53,22 +53,22 @@ var oldTime = 0;
             //Move the launcher missiles
             for (var i = 0; i < game_screen.launcherMissiles.length; i++) {
                 game_screen.launcherMissiles[i].goUp();
-                
+
                 //if a missile goes off the screen remove it from the array and hide it somehow
                 if (game_screen.launcherMissiles[i].getY() <= -9 ) {
                     game_screen.launcherMissiles[i].dom_element.style.visibility = "hidden";
                     game_screen.launcherMissiles.shift();
                 }
             }
-           
+
             // Move the fleet
             // fleet.move();
 
             //Randomly Fire - at a frequency dictated by the state of the fame
 
-            now = Date.now(); // new date with number of milliseconds since 1970            
+            now = Date.now(); // new date with number of milliseconds since 1970
             var timeDif = now - oldTime;
-            if ( timeDif > fleet.missileFrequency ) { 
+            if ( timeDif > fleet.missileFrequency ) {
                 game_screen.invaderMissiles.push(fleet.randomFire());
                 oldTime = now; //reset oldTime to now
             }
@@ -82,10 +82,8 @@ var oldTime = 0;
                 if (game_screen.invaderMissiles[i].getY() <= -9 ) {
                     game_screen.invaderMissiles[i].dom_element.style.visibility = "hidden";
                     game_screen.invaderMissiles.shift();
-                }                
+                }
             }
-
-
 
             //check for collisions and handle appropriately
 
@@ -109,20 +107,16 @@ var oldTime = 0;
                     };
                     // if (bunkers.overlaps(game_screen.invaderMissiles[i])) {
                     //         game_screen.launcherMissiles.splice(i, 1);
-                        
+
                     // };
                     
                 }
             }
-            
-                
 
             //check all game conditions are still valid and if not clear the game_interval so it stops doing stuff. then have a little game over joby thing?
             // if(launcher.lives <= 0){
             //     game_intveral = null;
             // }
-
-            
 
         };
 
@@ -132,7 +126,7 @@ var oldTime = 0;
 
     };
 
-    
+
 
 </script>
 
