@@ -35,11 +35,11 @@ var oldTime = 0;
                 launcher.goRight(); 
             
             //make launcher go left
-            } else if (e.keyCode == 37){                
+            } else if (e.keyCode == 37) {                
                 launcher.goLeft(); 
 
             //launcher fires a missile
-            }  else if (e.keyCode == 38)  {                
+            }  else if (e.keyCode == 38) {                
                 missile = launcher.fireMissile();                
                 game_screen.launcherMissiles.push(missile);
             }
@@ -55,7 +55,7 @@ var oldTime = 0;
                 game_screen.launcherMissiles[i].goUp();
                 
                 //if a missile goes off the screen remove it from the array and hide it somehow
-                if(game_screen.launcherMissiles[i].getY() <= -9 ){
+                if (game_screen.launcherMissiles[i].getY() <= -9 ) {
                     game_screen.launcherMissiles[i].dom_element.style.visibility = "hidden";
                     game_screen.launcherMissiles.shift();
                 }
@@ -68,7 +68,7 @@ var oldTime = 0;
 
             now = Date.now(); // new date with number of milliseconds since 1970            
             var timeDif = now - oldTime;
-            if ( timeDif > fleet.missileFrequency ){ 
+            if ( timeDif > fleet.missileFrequency ) { 
                 game_screen.invaderMissiles.push(fleet.randomFire());
                 oldTime = now; //reset oldTime to now
             }
@@ -79,7 +79,7 @@ var oldTime = 0;
                 game_screen.invaderMissiles[i].goDown();
                 
                 //if a missile goes off the screen remove it from the array and hide it somehow
-                if(game_screen.invaderMissiles[i].getY() <= -9 ){
+                if (game_screen.invaderMissiles[i].getY() <= -9 ) {
                     game_screen.invaderMissiles[i].dom_element.style.visibility = "hidden";
                     game_screen.invaderMissiles.shift();
                 }                
@@ -90,7 +90,7 @@ var oldTime = 0;
             //check for collisions and handle appropriately
 
                 //For all launcher game_screen.launcherMissiles -   did you hit an invader?
-            if(game_screen.launcherMissiles.length > 0){
+            if (game_screen.launcherMissiles.length > 0) {
                 for (var i = 0; i < game_screen.launcherMissiles.length; i++) {
                     for (var j = 0; j < fleet.invaders.length; j++) {
                         if (fleet.invaders[j].overlaps(game_screen.launcherMissiles[i])) {
@@ -102,7 +102,7 @@ var oldTime = 0;
             }
 
                 //For all invader missiles  -   did you hit  the launcher or a bunker??
-            if(game_screen.invaderMissiles.length > 0){
+            if (game_screen.invaderMissiles.length > 0){
                 for (var i = 0; i < game_screen.invaderMissiles.length; i++) {
                     if (launcher.overlaps(game_screen.invaderMissiles[i])) {
                         game_screen.invaderMissiles.splice(i, 1);
