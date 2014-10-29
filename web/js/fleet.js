@@ -35,9 +35,11 @@ function Fleet(game_screen, num_invaders){
     var fleet_width = 0;
 
     //Fill up the fleet
+    // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
     for (var i = 1; i < num_invaders + 1; i++) {
         this.invaders[i - 1] = new Invader(this,{x: x, y: y});
         x += 81;
+        // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
         if ((i % 10 == 0 ) && (i > 0) ){
             y += 50;
             fleet_width = x;
@@ -54,6 +56,7 @@ function Fleet(game_screen, num_invaders){
 Fleet.prototype = Object.create(SuperElement.prototype);
 Fleet.prototype.constructor = Fleet;
 
+// TTT: indentation, and what the comment about?!
  /*What does a fleet do?*/
 
 //Move the whole fleet
@@ -68,6 +71,7 @@ Fleet.prototype.move = function() {
         this.setY(this.getY() + this.offsetY);
     }
     
+    // TTT: inconsistency, why is there no space after if. Although i would prefer no space on all of them
     //if the fleet hits the right edge, go down and change this.direction
     else if ( (current_position <= left_edge) && (this.direction == (-1)) )  {
         this.direction = 1;
@@ -95,6 +99,7 @@ Fleet.prototype.receivedHit = function(otherThing) {
     console.log("hit passed to fleet");
 
     //now call collision detection on the invaders TODO opptomise to invaders in column x
+    // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
     for (var i = 0; i < this.invaders.length; i++) {
          console.log("Otherthing: " + otherThing + " invader number: " + i + "  Invader: " + this.invaders[i]);
         if(this.invaders[i].overlaps(otherThing)){ // IT'S BROKEN HERE - this *if* never evaluates to true...because the action has already been performed.. so maybe you *have* to write it the opposite way...? It's an infinite loop... you have one call the other call the other...

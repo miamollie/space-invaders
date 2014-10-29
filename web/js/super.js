@@ -56,25 +56,31 @@ SuperElement.prototype.overlaps = function(otherThing){
     var hitY;
 
     // x-axis overlap
+    // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
     if ( (element2_x >= element1_x) && (element2_x <= element1_x_w ) )
     {
         //leftmost coordinate inside
         hitX = element2_x;
 
+    // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
     } else if ( (element2_x_w >=  element1_x) && (element2_x_w <= element1_x_w ) ) {
         //rightmost coordinate inside
         hitX = element2_x_w;
     }
 
     //If overlapping on the x-axis
+    // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
     if (hitX)
     {
         //find out if Y-axis overlaps
+        // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
+        // TTT: indentation, yes, look carefully
        if ( (element2_y >= element1_y) && (element2_y <= element1_y_h) )
        {
             //top coordinate inside
             hitY = element2_y;
 
+        // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
        } else if ( (element2_y_h <=  element1_y) && (element2_y_h >= element1_y_h) ){
             //bottom coordinate inside
             hitY = element2_y_h;        
