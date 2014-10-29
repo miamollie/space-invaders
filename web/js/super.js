@@ -52,8 +52,8 @@ SuperElement.prototype.overlaps = function(otherThing){
     var element2_y_h = otherThing.getY() + otherThing.height()
 
     //Hit Location
-    var hitX;
-    var hitY;
+    var hitX = false;
+    var hitY = false;
 
     // x-axis overlap
     if ( (element2_x >= element1_x) && (element2_x <= element1_x_w ) )
