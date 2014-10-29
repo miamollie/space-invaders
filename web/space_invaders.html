@@ -16,21 +16,19 @@
    
     
 <script>
-// TTT: indentation
-var launcher; // TTT: not initialised
-var fleet; // TTT: not initialised
-var missile =  null;
-var game_screen = null;
-var now = 0;
-var oldTime = 0;
-
+    var launcher;
+    var fleet;
+    var missile =  null;
+    var game_screen = null;
+    var now = 0;
+    var oldTime = 0;
+        
     window.onload = function () {
         game_screen = new GameScreen();
         document.body.appendChild(game_screen.dom_element);
         launcher =  new Launcher(game_screen);
         fleet = new Fleet(game_screen, 10);
         
-
         this.onkeydown = function(e) { 
             //make launcher go right               
             // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
@@ -52,27 +50,26 @@ var oldTime = 0;
         }
 
 
-
         function upDateGame(){
 
             //Move the launcher missiles
             // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
             for (var i = 0; i < game_screen.launcherMissiles.length; i++) {
                 game_screen.launcherMissiles[i].goUp();
-                
+
                 //if a missile goes off the screen remove it from the array and hide it somehow
                 if (game_screen.launcherMissiles[i].getY() <= -9 ) {
                     game_screen.launcherMissiles[i].dom_element.style.visibility = "hidden";
                     game_screen.launcherMissiles.shift();
                 }
             }
-           
+
             // Move the fleet
             // fleet.move();
 
             //Randomly Fire - at a frequency dictated by the state of the fame
 
-            now = Date.now(); // new date with number of milliseconds since 1970            
+            now = Date.now(); // new date with number of milliseconds since 1970
             var timeDif = now - oldTime;
             // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
             if ( timeDif > fleet.missileFrequency ) { 
@@ -90,10 +87,8 @@ var oldTime = 0;
                 if (game_screen.invaderMissiles[i].getY() <= -9 ) {
                     game_screen.invaderMissiles[i].dom_element.style.visibility = "hidden";
                     game_screen.invaderMissiles.shift();
-                }                
+                }
             }
-
-
 
             //check for collisions and handle appropriately
 
@@ -126,20 +121,16 @@ var oldTime = 0;
                     };
                     // if (bunkers.overlaps(game_screen.invaderMissiles[i])) {
                     //         game_screen.launcherMissiles.splice(i, 1);
-                        
+
                     // };
                     
                 }
             }
-            
-                
 
             //check all game conditions are still valid and if not clear the game_interval so it stops doing stuff. then have a little game over joby thing?
             // if(launcher.lives <= 0){
             //     game_intveral = null;
             // }
-
-            
 
         };
 
@@ -149,7 +140,7 @@ var oldTime = 0;
 
     };
 
-    
+
 
 </script>
 
