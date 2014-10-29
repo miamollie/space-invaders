@@ -16,7 +16,6 @@
    
     
 <script>
-
     var launcher;
     var fleet;
     var missile =  null;
@@ -31,17 +30,20 @@
         fleet = new Fleet(game_screen, 10);
         
         this.onkeydown = function(e) { 
-            //make launcher go right
-            if (e.keyCode == 39) {              
-                launcher.goRight();
-
+            //make launcher go right               
+            // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
+            if (e.keyCode == 39) {                
+                launcher.goRight(); 
+            
             //make launcher go left
-            } else if (e.keyCode == 37) {
-                launcher.goLeft();
+            // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
+            } else if (e.keyCode == 37) {                
+                launcher.goLeft(); 
 
             //launcher fires a missile
-            }  else if (e.keyCode == 38) {
-                missile = launcher.fireMissile();
+            // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
+            }  else if (e.keyCode == 38) {                
+                missile = launcher.fireMissile();                
                 game_screen.launcherMissiles.push(missile);
             }
             
@@ -51,6 +53,7 @@
         function upDateGame(){
 
             //Move the launcher missiles
+            // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
             for (var i = 0; i < game_screen.launcherMissiles.length; i++) {
                 game_screen.launcherMissiles[i].goUp();
 
@@ -68,13 +71,15 @@
 
             now = Date.now(); // new date with number of milliseconds since 1970
             var timeDif = now - oldTime;
-            if ( timeDif > fleet.missileFrequency ) {
+            // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
+            if ( timeDif > fleet.missileFrequency ) { 
                 game_screen.invaderMissiles.push(fleet.randomFire());
                 oldTime = now; //reset oldTime to now
             }
 
 
             //Move the bombs down
+            // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
             for (var i = 0; i < game_screen.invaderMissiles.length; i++) {
                 game_screen.invaderMissiles[i].goDown();
                 
@@ -87,10 +92,15 @@
 
             //check for collisions and handle appropriately
 
-                //For all launcher game_screen.launcherMissiles -   did you hit an invader?
+            // TTT: indention of comment
+            // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
+              //For all launcher game_screen.launcherMissiles -   did you hit an invader?
             if (game_screen.launcherMissiles.length > 0) {
+                // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
                 for (var i = 0; i < game_screen.launcherMissiles.length; i++) {
+                    // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
                     for (var j = 0; j < fleet.invaders.length; j++) {
+                        // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
                         if (fleet.invaders[j].overlaps(game_screen.launcherMissiles[i])) {
                             console.log("here second?");
                             game_screen.launcherMissiles.splice(i, 1);
@@ -99,9 +109,13 @@
                 }
             }
 
+            // TTT: indention of comment
                 //For all invader missiles  -   did you hit  the launcher or a bunker??
+            // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
             if (game_screen.invaderMissiles.length > 0){
+                // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
                 for (var i = 0; i < game_screen.invaderMissiles.length; i++) {
+                    // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
                     if (launcher.overlaps(game_screen.invaderMissiles[i])) {
                         game_screen.invaderMissiles.splice(i, 1);
                     };
