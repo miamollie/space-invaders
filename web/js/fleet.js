@@ -40,7 +40,7 @@ function Fleet(game_screen, num_invaders){
         this.invaders[i - 1] = new Invader(this,{x: x, y: y});
         x += 81;
         // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
-        if ((i % 10 == 0 ) && (i > 0) ){
+        if ((i % 10 == 0 ) && (i > 0) ) {
             y += 50;
             fleet_width = x;
             x = 0;
@@ -66,14 +66,14 @@ Fleet.prototype.move = function() {
     var left_edge = 0;
 
     //if the fleet hits the right edge, go down and change direction
-    if( (current_position >= right_edge) && (this.direction == (1)) ){
+    if ( (current_position >= right_edge) && (this.direction == (1)) ) {
         this.direction = (-1);
         this.setY(this.getY() + this.offsetY);
     }
     
     // TTT: inconsistency, why is there no space after if. Although i would prefer no space on all of them
     //if the fleet hits the right edge, go down and change this.direction
-    else if ( (current_position <= left_edge) && (this.direction == (-1)) )  {
+    else if ( (current_position <= left_edge) && (this.direction == (-1)) ) {
         this.direction = 1;
         this.setY(this.getY() + this.offsetY);
     }
@@ -94,7 +94,7 @@ Fleet.prototype.randomFire = function() {
 
 
 
-//deal with a hit
+//Deal with a hit
 Fleet.prototype.receivedHit = function(otherThing) {
     console.log("hit passed to fleet");
 
