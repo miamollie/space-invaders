@@ -55,7 +55,6 @@
 
                 //if a missile goes off the screen remove it from the array and hide it somehow
                 if( game_screen.launcherMissiles[i].getY() <= -9 ){
-                    game_screen.launcherMissiles[i].dom_element.style.visibility = "hidden";
                     game_screen.launcherMissiles.shift();
                 }
             }
@@ -76,17 +75,15 @@
             //Move the bombs down
             for( var i = 0; i < game_screen.invaderMissiles.length; i++ ){
                 game_screen.invaderMissiles[i].goDown();
-
                 //if a missile goes off the screen remove it from the array and hide it somehow
-                if( game_screen.invaderMissiles[i].getY() <= -9 ){
-                    game_screen.invaderMissiles[i].dom_element.style.visibility = "hidden";
+                if( game_screen.invaderMissiles[i].getY() >= game_screen.height() ){
+                    game_screen.dom_element.removeChild(game_screen.invaderMissiles[i].dom_element);
                     game_screen.invaderMissiles.shift();
                 }
             }
 
             //check for collisions and handle appropriately
-
-            //For all launcher game_screen.launcherMissiles -   did you hit an invader?
+            //For all launcher game_screen.launcherMissiles -   did you hit an invader
             if( game_screen.launcherMissiles.length > 0 ){
                 for( var i = 0; i < game_screen.launcherMissiles.length; i++){
                      if( fleet.overlaps(game_screen.launcherMissiles[i]) ){
@@ -97,7 +94,7 @@
 
             //For all invader missiles  -   did you hit  the launcher or a bunker??
             if( game_screen.invaderMissiles.length > 0 ){
-                for(var i = 0; i < game_screen.invaderMissiles.length; i++ ){
+                for( var i = 0; i < game_screen.invaderMissiles.length; i++ ){
                     if( launcher.overlaps(game_screen.invaderMissiles[i]) ){
                         game_screen.invaderMissiles.splice(i, 1);
                     };

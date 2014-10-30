@@ -23,7 +23,7 @@ Missile.prototype.goUp = function() {
     this.setY(this.getY()-2);
 
     //if it goes higher than the game screen
-    if(this.getY() < (0 + missile_height) ){
+    if( this.getY() < (0 + missile_height) ){
         this.game_screen.dom_element.removeChild(this.dom_element);
     }
 };
@@ -31,9 +31,4 @@ Missile.prototype.goUp = function() {
 
 Missile.prototype.goDown = function() {
     this.setY(this.getY()+2);
-
-    //if it drops lower than the game screen
-    if(this.getY() > this.game_screen.height() ){
-        this.game_screen.dom_element.removeChild(this.dom_element);
-    }
 };
