@@ -83,7 +83,6 @@ SuperElement.prototype.overlaps = function(otherThing){
     }
 
 
-    console.log("Hit X: " + isHitX + " hit Y : " + isHitY );
     //if Overlapping in the X and Y
     if(isHitY && isHitX){
         //send off collision warning

@@ -95,19 +95,27 @@ Fleet.prototype.randomFire = function() {
 
 
 //Deal with a hit
-Fleet.prototype.receivedHit = function(otherThing, xCoords, yCoords) {
-    console.log("fleet hit at: " + xCoords + " " + yCoords);
+Fleet.prototype.receivedHit = function(otherThing, xCoordHit, yCoordHit) {
+    console.log("fleet hit at: " + xCoordHit + " " + yCoordHit);
+
+    var relHitX = xCoordHit - this.getX();
+    var relHitY = yCoordHit - this.getY();
+
     //now call collision detection on the invaders TODO opptomise to invaders in column x
     for( var i = 0; i < this.invaders.length; i++ ){
-        console.log("returning: " + this.invaders[i].overlaps(otherThing));
-        if( this.invaders[i].overlaps(otherThing) ){ // IT'S BROKEN HERE - this *if* never evaluates to true...because the action has already been performed.. so maybe you *have* to write it the opposite way...? It's an infinite loop... you have one call the other call the other...
-            //remove that invader
-            console.log("invader hit: " + i );
-            this.dom_element.style.border = "thick solid red";
-            otherThing.dom_element.parentNode.removeChild(otherThing.dom_element); //Delete the missile from the screen
-            this.invaders.splice(i, 1);
+
+        if( (this.invaders[i].getX() >= relHitX) && ((this.invaders[i].getX() + invaders[i].width()) <= relHitX) ){
+                console.log("invader hit: " + i );
+            if( (this.invaders[i].getY() <= relHitY) && ((this.invaders[i].getY() + invaders[i].height()) >= relHitY) ){
+                //remove that invader
+                // this.dom_element.style.border = "thick solid red";
+                // otherThing.dom_element.parentNode.removeChild(otherThing.dom_element); //Delete the missile from the screen
+                // this.invaders.splice(i, 1);
+            }
         }
+
     }
+
 
 
 
