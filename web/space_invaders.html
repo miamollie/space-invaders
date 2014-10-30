@@ -83,7 +83,6 @@
                 }
             }
 
-            return;
             //check for collisions and handle appropriately
             //For all launcher game_screen.launcherMissiles -   did you hit an invader
             if( game_screen.launcherMissiles.length > 0 ){
@@ -94,6 +93,7 @@
                 }
             }
 
+            return;
             //For all invader missiles  -   did you hit  the launcher or a bunker??
             if( game_screen.invaderMissiles.length > 0 ){
                 for( var i = 0; i < game_screen.invaderMissiles.length; i++ ){

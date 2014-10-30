@@ -52,39 +52,42 @@ SuperElement.prototype.overlaps = function(otherThing){
     var element2_y_h = otherThing.getY() + otherThing.height()
 
     //Hit Location
-    var hitX = false;
-    var hitY = false;
+    var isHitX = false;
+    var isHitY = false;
+    var xCoordHit = null;
+    var yCoordHit = null;
 
     // x-axis overlap
 
     if( (element2_x >= element1_x) && (element2_x <= element1_x_w ) ){
         //leftmost coordinate inside
-        hitX = true; //element2_x;
+        isHitX = true;
+        xCoordHit = element2_x;
 
     } else if( (element2_x_w >=  element1_x) && (element2_x_w <= element1_x_w ) ){
         //rightmost coordinate inside
-        hitX = true; //element2_x_w;
+        isHitX = true;
+        xCoordHit = element2_x_w;
     }
 
     //If overlapping on the x-axis
-    if(hitX){
-        //find out if Y-axis overlaps
+    if( (element2_y >= element1_y) && (element2_y <= element1_y_h) ){
+        //top coordinate inside
+        isHitY = true; // element2_y;
+        yCoordHit = element2_y_h;
 
-        // TTT: indentation, yes, look carefully
-        if( (element2_y >= element1_y) && (element2_y <= element1_y_h) ){
-            //top coordinate inside
-            hitY = true; // element2_y;
-        } else if( (element2_y_h <=  element1_y) && (element2_y_h >= element1_y_h) ){
-            //bottom coordinate inside
-            hitY = true; //element2_y_h;
-       }
-
+    } else if( (element2_y_h <=  element1_y) && (element2_y_h >= element1_y_h) ){
+        //bottom coordinate inside
+        isHitY = true;
+        yCoordHit = element2_y_h;
     }
 
+
+    console.log("Hit X: " + isHitX + " hit Y : " + isHitY );
     //if Overlapping in the X and Y
-    if(hitY){
+    if(isHitY && isHitX){
         //send off collision warning
-        this.receivedHit(otherThing);
+        this.receivedHit(otherThing, xCoordHit, yCoordHit);
         return true;
     }
 

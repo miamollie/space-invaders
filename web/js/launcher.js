@@ -6,15 +6,15 @@ function Launcher(game_screen){
     SuperElement.call( this);
 
     this.lives = 3;
-    
+
     this.game_screen = game_screen;
-    
+
     //make a new DOM element
     this.dom_element = document.createElement("div");
     this.dom_element.setAttribute("id", "launcher");
-   
+
     game_screen.dom_element.appendChild( this.dom_element );
-   
+
     this.setX(game_screen.width()/2 - this.width()/2);
     this.setY(game_screen.height() - this.height());
 
@@ -39,10 +39,10 @@ Launcher.prototype.goLeft = function() {
 
 //Move the launcher right
 Launcher.prototype.goRight = function() {
-    
+
     var launcher_width = this.width();
     var right_edge = this.game_screen.width();
-    
+
     //make sure the launcher stays on the screen
     if(this.getX() >= right_edge - launcher_width){
         this.setX(right_edge - launcher_width);
@@ -56,6 +56,7 @@ Launcher.prototype.goRight = function() {
 
 
 Launcher.prototype.receivedHit = function(otherThing){
+    console.log("launcher hit");
     this.lives --;
     otherThing.dom_element.parentNode.removeChild(otherThing.dom_element); //Delete the missile from the screen
 }

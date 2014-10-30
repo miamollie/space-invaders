@@ -95,14 +95,16 @@ Fleet.prototype.randomFire = function() {
 
 
 //Deal with a hit
-Fleet.prototype.receivedHit = function(otherThing) {
-    console.log("hit passed to fleet");
-
+Fleet.prototype.receivedHit = function(otherThing, xCoords, yCoords) {
+    console.log("fleet hit at: " + xCoords + " " + yCoords);
     //now call collision detection on the invaders TODO opptomise to invaders in column x
-    // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
     for( var i = 0; i < this.invaders.length; i++ ){
+        console.log("returning: " + this.invaders[i].overlaps(otherThing));
         if( this.invaders[i].overlaps(otherThing) ){ // IT'S BROKEN HERE - this *if* never evaluates to true...because the action has already been performed.. so maybe you *have* to write it the opposite way...? It's an infinite loop... you have one call the other call the other...
             //remove that invader
+            console.log("invader hit: " + i );
+            this.dom_element.style.border = "thick solid red";
+            otherThing.dom_element.parentNode.removeChild(otherThing.dom_element); //Delete the missile from the screen
             this.invaders.splice(i, 1);
         }
     }
