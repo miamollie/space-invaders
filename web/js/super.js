@@ -11,6 +11,13 @@ SuperElement.prototype.marginBottom = function() {
 SuperElement.prototype.marginLeft = function() {
     return parseFloat(getComputedStyle( this.dom_element, null).marginLeft);
 };
+SuperElement.prototype.marginTop = function() {
+    return parseFloat(getComputedStyle( this.dom_element, null).marginTop);
+};
+
+SuperElement.prototype.marginRight = function() {
+    return parseFloat(getComputedStyle( this.dom_element, null).marginRight);
+};
 
 SuperElement.prototype.width = function() {
     return parseFloat(getComputedStyle( this.dom_element, null).width);
@@ -18,6 +25,13 @@ SuperElement.prototype.width = function() {
 
 SuperElement.prototype.height = function() {
     return parseFloat(getComputedStyle( this.dom_element, null).height);
+};
+SuperElement.prototype.outerWidth = function() {
+    return this.width() + this.marginLeft() + this.marginRight();
+};
+
+SuperElement.prototype.outerHeight = function() {
+    return this.height() + this.marginBottom() + this.marginTop() ;
 };
 
 SuperElement.prototype.setX = function( x ) {
