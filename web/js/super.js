@@ -56,14 +56,14 @@ SuperElement.prototype.overlaps = function(otherThing){
     var hitY = false;
 
     // x-axis overlap
-    
+
     if( (element2_x >= element1_x) && (element2_x <= element1_x_w ) ){
         //leftmost coordinate inside
-        hitX = element2_x;
-    
+        hitX = true; //element2_x;
+
     } else if( (element2_x_w >=  element1_x) && (element2_x_w <= element1_x_w ) ){
         //rightmost coordinate inside
-        hitX = element2_x_w;
+        hitX = true; //element2_x_w;
     }
 
     //If overlapping on the x-axis
@@ -73,12 +73,12 @@ SuperElement.prototype.overlaps = function(otherThing){
         // TTT: indentation, yes, look carefully
         if( (element2_y >= element1_y) && (element2_y <= element1_y_h) ){
             //top coordinate inside
-            hitY = element2_y;        
+            hitY = true; // element2_y;
         } else if( (element2_y_h <=  element1_y) && (element2_y_h >= element1_y_h) ){
             //bottom coordinate inside
-            hitY = element2_y_h;
+            hitY = true; //element2_y_h;
        }
-       
+
     }
 
     //if Overlapping in the X and Y
@@ -87,12 +87,12 @@ SuperElement.prototype.overlaps = function(otherThing){
         this.receivedHit(otherThing);
         return true;
     }
-    
+
     return false;
-    
+
 }
 
-//Fire Missile 
+//Fire Missile
 
 //Any object can fire a missile from its current position
 SuperElement.prototype.fireMissile = function() {
