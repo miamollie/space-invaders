@@ -2,7 +2,7 @@
 function Missile(gun, game_screen){
     // Inheritance
     SuperElement.call( this );
-    
+
     this.game_screen =  game_screen;
     //make a new DOM element
     this.dom_element = document.createElement("div");
