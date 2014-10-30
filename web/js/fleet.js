@@ -35,20 +35,19 @@ function Fleet(game_screen, num_invaders){
     var fleet_width = 0;
 
     //Fill up the fleet
-    // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
     for( var i = 1; i < num_invaders + 1; i++ ){
-        this.invaders[i - 1] = new Invader(this,{x: x, y: y});
-        x += 81;
-        // TTT: inconsistency, why is there no space after if/for. Although i would prefer no space on all of them
-        if((i % 10 == 0 ) && (i > 0) ){
-            y += 50;
-            fleet_width = x;
+        this.invaders[i - 1] = new Invader(this, {x: x, y: y});
+        x += this.invaders[i-1].width() - this.invaders[i-1].marginLeft();
+
+        if( (i % 10 == 0 ) ){
+            y += this.invaders[i-1].height() + this.invaders[i-1].marginBottom();
+            fleet_width = x - this.invaders[i-1].marginLeft();
             x = 0;
         }
-    };
+    }
 
     this.setWidth(fleet_width); // set width of the fleet to one row of invaders
-    this.setHeight(y); // set height of fleet to one column of invaders
+    this.setHeight(y - this.invaders[0].marginBottom()); // set height of fleet to one column of invaders
 
 }
 

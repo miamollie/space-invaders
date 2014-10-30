@@ -1,6 +1,16 @@
 
 function SuperElement( ){
+
 }
+
+
+SuperElement.prototype.marginBottom = function() {
+    return parseFloat(getComputedStyle( this.dom_element, null).marginBottom);
+};
+
+SuperElement.prototype.marginLeft = function() {
+    return parseFloat(getComputedStyle( this.dom_element, null).marginLeft);
+};
 
 SuperElement.prototype.width = function() {
     return parseFloat(getComputedStyle( this.dom_element, null).width);
