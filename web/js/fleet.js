@@ -116,9 +116,9 @@ Fleet.prototype.receivedHit = function(otherThing, xCoordHit, yCoordHit) {
             " invader Y: " + this.invaders[i].getY()
           );
 
-        if( (this.invaders[i].getX() >= xRelHit) && ((this.invaders[i].getX() + this.invaders[i].width()) <= xRelHit) ){
+        if( (xRelHit >= this.invaders[i].getX()) && ( xRelHit  <= (this.invaders[i].getX() + this.invaders[i].width())) ){
+            if( (yRelHit >= this.invaders[i].getY()) && ( yRelHit <= (this.invaders[i].getY() + this.invaders[i].height())) ){
                 console.log("invader hit: " + i );
-            if( (this.invaders[i].getY() <= yRelHit) && ((this.invaders[i].getY() + this.invaders[i].height()) >= yRelHit) ){
                 //remove that invader
                 // this.dom_element.style.border = "thick solid red";
                 // otherThing.dom_element.parentNode.removeChild(otherThing.dom_element); //Delete the missile from the screen
