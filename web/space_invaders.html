@@ -89,8 +89,7 @@
             //For all launcher game_screen.launcherMissiles -   did you hit an invader?
             if( game_screen.launcherMissiles.length > 0 ){
                     for( var i = 0; i < game_screen.launcherMissiles.length; i++){
-                        for( var j = 0; j < fleet.invaders.length; j++ ){
-                            if( fleet.invaders[j].overlaps(game_screen.launcherMissiles[i]) ){
+                            if( fleet.overlaps(game_screen.launcherMissiles[i]) ){
                                 game_screen.launcherMissiles.splice(i, 1);
                         };
                     };
