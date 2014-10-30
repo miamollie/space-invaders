@@ -98,15 +98,15 @@ Fleet.prototype.randomFire = function() {
 Fleet.prototype.receivedHit = function(otherThing, xCoordHit, yCoordHit) {
     console.log("fleet hit at: " + xCoordHit + " " + yCoordHit);
 
-    var relHitX = xCoordHit - this.getX();
-    var relHitY = yCoordHit - this.getY();
+    var xRelHit = xCoordHit - this.getX();
+    var yRelHit = yCoordHit - this.getY();
 
     //now call collision detection on the invaders TODO opptomise to invaders in column x
     for( var i = 0; i < this.invaders.length; i++ ){
 
-        if( (this.invaders[i].getX() >= relHitX) && ((this.invaders[i].getX() + invaders[i].width()) <= relHitX) ){
+        if( (this.invaders[i].getX() >= xRelHit) && ((this.invaders[i].getX() + this.invaders[i].width()) <= xRelHit) ){
                 console.log("invader hit: " + i );
-            if( (this.invaders[i].getY() <= relHitY) && ((this.invaders[i].getY() + invaders[i].height()) >= relHitY) ){
+            if( (this.invaders[i].getY() <= yRelHit) && ((this.invaders[i].getY() + this.invaders[i].height()) >= yRelHit) ){
                 //remove that invader
                 // this.dom_element.style.border = "thick solid red";
                 // otherThing.dom_element.parentNode.removeChild(otherThing.dom_element); //Delete the missile from the screen
