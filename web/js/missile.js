@@ -19,13 +19,7 @@ Missile.prototype.constructor = Missile;
 //Move up the Screen
 
 Missile.prototype.goUp = function() {
-    var missile_height = this.height;
     this.setY(this.getY()-2);
-
-    //if it goes higher than the game screen
-    if( this.getY() < (0 + missile_height) ){
-        this.game_screen.dom_element.removeChild(this.dom_element);
-    }
 };
 
 

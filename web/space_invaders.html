@@ -54,7 +54,8 @@
                 game_screen.launcherMissiles[i].goUp();
 
                 //if a missile goes off the screen remove it from the array and hide it somehow
-                if( game_screen.launcherMissiles[i].getY() <= -9 ){
+                if( game_screen.launcherMissiles[i].getY() <= 0 ){
+                    game_screen.dom_element.removeChild(game_screen.launcherMissiles[i].dom_element);
                     game_screen.launcherMissiles.shift();
                 }
             }
@@ -82,6 +83,7 @@
                 }
             }
 
+            return;
             //check for collisions and handle appropriately
             //For all launcher game_screen.launcherMissiles -   did you hit an invader
             if( game_screen.launcherMissiles.length > 0 ){
