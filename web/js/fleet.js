@@ -55,7 +55,7 @@ function Fleet(game_screen, num_invaders){
 Fleet.prototype = Object.create(SuperElement.prototype);
 Fleet.prototype.constructor = Fleet;
 
-// TTT: indentation, and what the comment about?!
+
  /*What does a fleet do?*/
 
 //Move the whole fleet
