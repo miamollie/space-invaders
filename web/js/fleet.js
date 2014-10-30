@@ -21,7 +21,7 @@ function Fleet(game_screen, num_invaders){
 
     // Speed that the fleet moves from left to right and down, which will be updated as the invaders are destroyed
     this.setX(20);
-    this.setY(5);
+    this.setY(0);
 
     //Speed of movement
     this.offsetX = 0.5;
@@ -96,13 +96,25 @@ Fleet.prototype.randomFire = function() {
 
 //Deal with a hit
 Fleet.prototype.receivedHit = function(otherThing, xCoordHit, yCoordHit) {
-    console.log("fleet hit at: " + xCoordHit + " " + yCoordHit);
 
     var xRelHit = xCoordHit - this.getX();
     var yRelHit = yCoordHit - this.getY();
 
+    console.log(" hit X: " + xCoordHit +
+        " hit Y: " + yCoordHit +
+        " fleet X:" + this.getX() +
+        " fleet Y:" + this.getY() +
+        " rel X:" + xRelHit +
+        " rel Y:" + yRelHit
+        );
+
     //now call collision detection on the invaders TODO opptomise to invaders in column x
     for( var i = 0; i < this.invaders.length; i++ ){
+
+        console.log(
+            "invader X: " + this.invaders[i].getX() +
+            " invader Y: " + this.invaders[i].getY()
+          );
 
         if( (this.invaders[i].getX() >= xRelHit) && ((this.invaders[i].getX() + this.invaders[i].width()) <= xRelHit) ){
                 console.log("invader hit: " + i );
