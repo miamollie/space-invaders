@@ -30,7 +30,7 @@ function Fleet(game_screen, num_invaders){
     //Direction of movement
     this.direction = 1; // starts by going right
 
-    var x = 0;
+    var x = -10; //This needs to be -(Invader.MarignLeft)
     var y = 0;
     var fleet_width = 0;
 
@@ -38,12 +38,12 @@ function Fleet(game_screen, num_invaders){
     for( var i = 1; i < num_invaders + 1; i++ ){
         this.invaders[i - 1] = new Invader(this, {x: x, y: y});
         console.log("X: "+ x + " y: " + y);
-        x += this.invaders[i-1].width() + this.invaders[i-1].marginLeft();
+        x += this.invaders[i-1].outerWidth();
 
         if( (i % 10 == 0 ) ){
-            y += this.invaders[i-1].height() + this.invaders[i-1].marginBottom();
-            fleet_width = x - this.invaders[i-1].marginLeft();
-            x = 0;
+            y += this.invaders[i-1].outerHeight();
+            fleet_width = x;
+            x = -this.invaders[i-1].marginLeft();
         }
     }
 
