@@ -111,9 +111,11 @@
                 }
             }
 
-            if( (launcher.lives <= 0) || (fleet.invaders.length == 0) || (fleet.getY() + fleet.height() > game_screen.threshold)){
+            if( (launcher.lives <= 0) || (fleet.invaders.length == 0) || (fleet.getY() + fleet.height() > game_screen.threshold) ){
                 console.log("here");
-                game_interval = null;
+                clearInterval(game_interval);
+
+                //add some GAME OVER message
             }
 
         };
