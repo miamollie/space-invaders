@@ -5,7 +5,7 @@ function Fleet(game_screen, num_invaders){
     //inheritance
     SuperElement.call( this, [0] );
 
-    this.missileFrequency = 5000; // initially invaders fire roughly every 5 seconds
+    this.missileFrequency = 4000; // initially invaders fire roughly every 5 seconds
 
     this.invaders = [];
     this.game_screen = game_screen;
@@ -186,7 +186,9 @@ Fleet.prototype.receivedHit = function(otherThing, invaderHitIndex) {
             // this.setHeight(0);
 
     //Increase the speed of movement of the fleet
-    this.offsetX += 0.1;// TODO: how much faster does it start moving?
+    this.offsetX += 0.1;//
+
+
 }
 
 
