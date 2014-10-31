@@ -21,7 +21,7 @@ function Fleet(game_screen, num_invaders){
 
     // Speed that the fleet moves from left to right and down, which will be updated as the invaders are destroyed
     this.setX(20);
-    this.setY(0);
+    this.setY(20);
 
     //Speed of movement
     this.offsetX = 0.5;
@@ -37,7 +37,8 @@ function Fleet(game_screen, num_invaders){
     //Fill up the fleet
     for( var i = 1; i < num_invaders + 1; i++ ){
         this.invaders[i - 1] = new Invader(this, {x: x, y: y});
-        x += this.invaders[i-1].width() - this.invaders[i-1].marginLeft();
+        console.log("X: "+ x + " y: " + y);
+        x += this.invaders[i-1].width() + this.invaders[i-1].marginLeft();
 
         if( (i % 10 == 0 ) ){
             y += this.invaders[i-1].height() + this.invaders[i-1].marginBottom();
@@ -93,44 +94,96 @@ Fleet.prototype.randomFire = function() {
 
 
 
-//Deal with a hit
-Fleet.prototype.receivedHit = function(otherThing, xCoordHit, yCoordHit) {
+//Fleet's Very own special overlaps methog
+Fleet.prototype.overlaps = function(otherThing) {
 
-    var xRelHit = xCoordHit - this.getX();
-    var yRelHit = yCoordHit - this.getY();
 
-    console.log(" hit X: " + xCoordHit +
-        " hit Y: " + yCoordHit +
-        " fleet X:" + this.getX() +
-        " fleet Y:" + this.getY() +
-        " rel X:" + xRelHit +
-        " rel Y:" + yRelHit
-        );
+    //Width Variables
+    var element1_x = this.getX();
+    var element2_x = otherThing.getX();
+    var element1_x_w = this.getX() + this.width();
+    var element2_x_w = otherThing.getX() + otherThing.width();
 
-    //now call collision detection on the invaders TODO opptomise to invaders in column x
-    for( var i = 0; i < this.invaders.length; i++ ){
+    //Height Variables
+    var element1_y = this.getY();
+    var element2_y = otherThing.getY();
+    var element1_y_h = this.getY() + this.height();
+    var element2_y_h = otherThing.getY() + otherThing.height()
 
-        console.log(
-            "invader X: " + this.invaders[i].getX() +
-            " invader Y: " + this.invaders[i].getY()
-          );
+    //Hit Location
+    var isHitX = false;
+    var isHitY = false;
+    var xCoordHit = null;
+    var yCoordHit = null;
 
-        if( (xRelHit >= this.invaders[i].getX()) && ( xRelHit  <= (this.invaders[i].getX() + this.invaders[i].outerWidth())) ){
+    // x-axis overlap
+    if( (element2_x >= element1_x) && (element2_x <= element1_x_w ) ){
+        //leftmost coordinate inside
+        isHitX = true;
+        xCoordHit = element2_x;
 
-            if( (yRelHit >= this.invaders[i].getY()) && ( yRelHit <= (this.invaders[i].getY() + this.invaders[i].outerHeight())) ){
-                console.log("invader hit: " + i );
-                //remove that invader
-                this.dom_element.removeChild( this.invaders[i].dom_element );
-                this.invaders.splice(i, 1);
-                //the missile gets removed in the main game update loop
+    } else if( (element2_x_w >=  element1_x) && (element2_x_w <= element1_x_w ) ){
+        //rightmost coordinate inside
+        isHitX = true;
+        xCoordHit = element2_x_w;
+    }
 
-            }
-        }
+    // y-axis overlap
+    if( (element2_y >= element1_y) && (element2_y <= element1_y_h) ){
+        //top coordinate inside
+        isHitY = true; // element2_y;
+        yCoordHit = element2_y_h;
 
+    } else if( (element2_y_h <=  element1_y) && (element2_y_h >= element1_y_h) ){
+        //bottom coordinate inside
+        isHitY = true;
+        yCoordHit = element2_y_h;
     }
 
 
+    //if Overlapping in the X and Y of the fleet, then check the invaders
+    if( isHitY && isHitX ){
 
+        var xRelHit = xCoordHit - this.getX();
+        var yRelHit = yCoordHit - this.getY();
+
+        //Keet track of the invader that's been hit
+        var invaderHitIndex = null;
+
+        console.log(" hit X: " + xCoordHit +
+            " hit Y: " + yCoordHit +
+            " fleet X:" + this.getX() +
+            " fleet Y:" + this.getY() +
+            " rel X:" + xRelHit +
+            " rel Y:" + yRelHit
+            );
+
+        //now call collision detection on the invaders TODO opptomise to invaders in column x
+        for( invaderHitIndex = 0; invaderHitIndex < this.invaders.length; invaderHitIndex++ ){
+
+            if( (xRelHit >= this.invaders[invaderHitIndex].getX()) && ( xRelHit  <= (this.invaders[invaderHitIndex].getX() + this.invaders[invaderHitIndex].outerWidth())) ){
+
+                if( (yRelHit >= this.invaders[invaderHitIndex].getY()) && ( yRelHit <= (this.invaders[invaderHitIndex].getY() + this.invaders[invaderHitIndex].outerHeight())) ){
+                    //send off collision warning
+                    this.receivedHit(otherThing, invaderHitIndex);
+                    return true;
+
+                }
+            }
+        }
+    }
+
+    return false;
+
+};
+
+
+//Deal with a hit
+Fleet.prototype.receivedHit = function(otherThing, invaderHitIndex) {
+
+    //delete that invader and remove it from the screen
+    this.dom_element.removeChild(this.invaders[invaderHitIndex].dom_element);
+    this.invaders.splice(invaderHitIndex, 1);
 
     //update the width and or height of the fleet if needed
         // if the removed invader was at an end of the longest row update the width; do you keep track of which row is longest?

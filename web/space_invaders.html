@@ -63,7 +63,7 @@
             // Move the fleet
             // fleet.move();
 
-            //Randomly Fire - at a frequency dictated by the state of the fame
+            //Randomly Fire - at a frequency dictated by the state of the game
 
             now = Date.now(); // new date with number of milliseconds since 1970
             var timeDif = now - oldTime;
@@ -86,10 +86,10 @@
             //check for collisions and handle appropriately
             //For all launcher game_screen.launcherMissiles -   did you hit an invader
             if( game_screen.launcherMissiles.length > 0 ){
-                for( var i = 0; i < game_screen.launcherMissiles.length; i++){
+                for( var i = 0; i < game_screen.launcherMissiles.length; i++ ){
                      if( fleet.overlaps(game_screen.launcherMissiles[i]) ){
                         game_screen.dom_element.removeChild(game_screen.launcherMissiles[i].dom_element); //Delete the missile from the screen
-                        game_screen.launcherMissiles.splice(i, 1);
+                        game_screen.launcherMissiles.splice(i, 1); //remove the missile from the array
                     }
                 }
             }
@@ -99,10 +99,13 @@
             if( game_screen.invaderMissiles.length > 0 ){
                 for( var i = 0; i < game_screen.invaderMissiles.length; i++ ){
                     if( launcher.overlaps(game_screen.invaderMissiles[i]) ){
-                        game_screen.invaderMissiles.splice(i, 1);
+                        game_screen.dom_element.removeChild(game_screen.launcherMissiles[i].dom_element); //Delete the missile from the screen
+                        game_screen.invaderMissiles.splice(i, 1); // Remove the missile from the array
                     };
                     // if( bunkers.overlaps(game_screen.invaderMissiles[i])){
-                    //         game_screen.launcherMissiles.splice(i, 1);
+                        // game_screen.dom_element.removeChild(game_screen.launcherMissiles[i].dom_element); //Delete the missile from the screen
+
+                        // game_screen.launcherMissiles.splice(i, 1);
 
                     // };
 
