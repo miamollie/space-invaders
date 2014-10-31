@@ -4,13 +4,14 @@
 /* S C R E E N */
 function GameScreen(){
     //Inheritance
-    SuperElement.call( this, [0] ); 
-    
+    SuperElement.call( this, [0] );
+
     //make a new DOM element
     this.dom_element = document.createElement("div");
     this.dom_element.setAttribute("id", "game_screen");
     this.invaderMissiles = [];
     this.launcherMissiles = [];
+    this.threshold = 400; // TODO what should this value be?
 
 }
 

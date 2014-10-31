@@ -56,9 +56,9 @@ Launcher.prototype.goRight = function() {
 
 
 Launcher.prototype.receivedHit = function(otherThing){
-    console.log("launcher hit");
     this.lives --;
-    otherThing.dom_element.parentNode.removeChild(otherThing.dom_element); //Delete the missile from the screen
+    console.log("launcher hit, remaining lives: " + this.lives);
+
 }
 
 

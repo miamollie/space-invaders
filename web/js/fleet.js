@@ -37,7 +37,7 @@ function Fleet(game_screen, num_invaders){
     //Fill up the fleet
     for( var i = 1; i < num_invaders + 1; i++ ){
         this.invaders[i - 1] = new Invader(this, {x: x, y: y});
-        console.log("X: "+ x + " y: " + y);
+
         x += this.invaders[i-1].outerWidth();
 
         if( (i % 10 == 0 ) ){
@@ -149,14 +149,6 @@ Fleet.prototype.overlaps = function(otherThing) {
 
         //Keet track of the invader that's been hit
         var invaderHitIndex = null;
-
-        console.log(" hit X: " + xCoordHit +
-            " hit Y: " + yCoordHit +
-            " fleet X:" + this.getX() +
-            " fleet Y:" + this.getY() +
-            " rel X:" + xRelHit +
-            " rel Y:" + yRelHit
-            );
 
         //now call collision detection on the invaders TODO opptomise to invaders in column x
         for( invaderHitIndex = 0; invaderHitIndex < this.invaders.length; invaderHitIndex++ ){

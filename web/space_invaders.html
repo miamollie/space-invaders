@@ -94,12 +94,11 @@
                 }
             }
 
-            return;
             //For all invader missiles  -   did you hit  the launcher or a bunker??
             if( game_screen.invaderMissiles.length > 0 ){
                 for( var i = 0; i < game_screen.invaderMissiles.length; i++ ){
                     if( launcher.overlaps(game_screen.invaderMissiles[i]) ){
-                        game_screen.dom_element.removeChild(game_screen.launcherMissiles[i].dom_element); //Delete the missile from the screen
+                        game_screen.dom_element.removeChild(game_screen.invaderMissiles[i].dom_element); //Delete the missile from the screen
                         game_screen.invaderMissiles.splice(i, 1); // Remove the missile from the array
                     };
                     // if( bunkers.overlaps(game_screen.invaderMissiles[i])){
@@ -112,10 +111,10 @@
                 }
             }
 
-            //check all game conditions are still valid and if not clear the game_interval so it stops doing stuff. then have a little game over joby thing?
-            // if(launcher.lives <= 0){
-            //     game_intveral = null;
-            // }
+            if( (launcher.lives <= 0) || (fleet.invaders.length == 0) || (fleet.getY() + fleet.height() > game_screen.threshold)){
+                console.log("here");
+                game_interval = null;
+            }
 
         };
 
