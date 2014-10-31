@@ -185,8 +185,8 @@ Fleet.prototype.receivedHit = function(otherThing, invaderHitIndex) {
         //if the invader removed was the last in its column
             // this.setHeight(0);
 
-    //Change the speed the fleet moves at: incremet speed of movement
-        //this.offsetX++;// TODO: how much faster does it start moving?
+    //Increase the speed of movement of the fleet
+    this.offsetX += 0.1;// TODO: how much faster does it start moving?
 }
 
 
