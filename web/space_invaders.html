@@ -58,8 +58,8 @@
                 game_screen.launcherMissiles[i].goUp();
 
                 //if a missile goes off the screen remove it from the array and hide it somehow
-                if( game_screen.launcherMissiles[i].getY() <= 0 ){
-                    game_screen.dom_element.removeChild(game_screen.launcherMissiles[i].dom_element);
+                if( game_screen.launcherMissiles[0].getY() <= 0 ){
+                    game_screen.dom_element.removeChild(game_screen.launcherMissiles[0].dom_element);
                     game_screen.launcherMissiles.shift();
                 }
             }
@@ -81,8 +81,8 @@
             for( var i = 0; i < game_screen.invaderMissiles.length; i++ ){
                 game_screen.invaderMissiles[i].goDown();
                 //if a missile goes off the screen remove it from the array and hide it somehow
-                if( game_screen.invaderMissiles[i].getY() >= game_screen.height() ){
-                    game_screen.dom_element.removeChild(game_screen.invaderMissiles[i].dom_element);
+                if( game_screen.invaderMissiles[0].getY() >= game_screen.height() ){
+                    game_screen.dom_element.removeChild(game_screen.invaderMissiles[0].dom_element);
                     game_screen.invaderMissiles.shift();
                 }
             }
