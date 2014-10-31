@@ -19,6 +19,7 @@
     var launcher;
     var fleet;
     var missile =  null;
+    var bunkers = [];
     var game_screen = null;
     var now = 0;
     var oldTime = 0;
@@ -29,17 +30,20 @@
         launcher =  new Launcher(game_screen);
         fleet = new Fleet(game_screen, 50);
 
+
+
+        //set up the controls
         this.onkeydown = function(e){
             //make launcher go right
-            if( e.keyCode == 39 ){
+            if( e.keyCode == 68 ){
                 launcher.goRight();
 
             //make launcher go left
-            } else if( e.keyCode == 37 ){
+            } else if( e.keyCode == 65 ){
                 launcher.goLeft();
 
             //launcher fires a missile
-            }  else if( e.keyCode == 38 ){
+            }  else if( e.keyCode == 32 ){
                 missile = launcher.fireMissile();
                 game_screen.launcherMissiles.push(missile);
             }
@@ -101,6 +105,7 @@
                         game_screen.dom_element.removeChild(game_screen.invaderMissiles[i].dom_element); //Delete the missile from the screen
                         game_screen.invaderMissiles.splice(i, 1); // Remove the missile from the array
                     };
+
                     // if( bunkers.overlaps(game_screen.invaderMissiles[i])){
                         // game_screen.dom_element.removeChild(game_screen.launcherMissiles[i].dom_element); //Delete the missile from the screen
 
@@ -115,7 +120,7 @@
                 console.log("here");
                 clearInterval(game_interval);
 
-                //add some GAME OVER message
+                //add some GAME OVER message and disable controls
             }
 
         };
