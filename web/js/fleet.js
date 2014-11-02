@@ -179,6 +179,7 @@ Fleet.prototype.overlaps = function(otherThing) {
 Fleet.prototype.receivedHit = function(otherThing, invaderHitIndex) {
 
     //delete that invader and remove it from the screen
+    // this.invaders[invaderHitIndex].dom_element.classList.add("explosion");
     this.dom_element.removeChild(this.invaders[invaderHitIndex].dom_element);
     this.invaders.splice(invaderHitIndex, 1);
 

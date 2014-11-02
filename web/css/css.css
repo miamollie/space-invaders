@@ -49,6 +49,14 @@
 }
 
 
+.invader.explosion{
+    background-image: url('/images/explosionWhite.png');
+}
+
+#launcher.explosion{
+    background-image: url('/images/explosionGreen.png');
+}
+
 /*There are three more types of invader that need to be written*/
 
 #fleet{
