@@ -30,7 +30,7 @@ function Fleet(game_screen, num_invaders){
     //Direction of movement
     this.direction = 1; // starts by going right
 
-    var x = -10; //This needs to be -(Invader.MarignLeft)
+    var x = -20; //This needs to be -(Invader.MarignLeft)
     var y = 0;
     var fleet_width = 0;
 
@@ -61,6 +61,7 @@ Fleet.prototype.constructor = Fleet;
 
 //Move the whole fleet
 Fleet.prototype.move = function() {
+
     var current_position = this.getX();
     var right_edge = this.game_screen.width() - this.width();
     var left_edge = 0;
@@ -71,7 +72,6 @@ Fleet.prototype.move = function() {
         this.setY(this.getY() + this.offsetY);
     }
 
-    // TTT: inconsistency, why is there no space after if. Although i would prefer no space on all of them
     //if the fleet hits the right edge, go down and change this.direction
     else if( (current_position <= left_edge) && (this.direction == (-1)) ){
         this.direction = 1;
@@ -83,20 +83,31 @@ Fleet.prototype.move = function() {
         this.setX(this.getX() + (this.offsetX * this.direction));
     }
 
+//Make the invaders change how they look
+
+    for( var i = 0; i < this.invaders.length; i++ ){
+        // this.invaders[i].dom_element. TOGGLE CLASS FIRST SECOND IMAGE
+
+    }
+
 };
 
 //Among the remaining invaders, randomly fire
 Fleet.prototype.randomFire = function() {
+
     var firingInvader = Math.floor((Math.random() * (this.invaders.length- 1) + 0)); // pick an invader between 0 and number of remaining invaders in fleet
-    var missile =  this.invaders[firingInvader].fireMissile();
+    var missile = new Missile(firingInvader, game_screen);
+    missile.setX(this.getX() + this.invaders[firingInvader].getX() + ( (this.invaders[firingInvader].width()) - (missile.width())) );
+    missile.setY(this.getY() + this.invaders[firingInvader].getY());
+
     return missile;
 }
 
 
 
+
 //Fleet's Very own special overlaps methog
 Fleet.prototype.overlaps = function(otherThing) {
-
 
     //Width Variables
     var element1_x = this.getX();

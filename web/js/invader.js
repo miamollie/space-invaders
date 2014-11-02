@@ -8,6 +8,7 @@ function Invader(fleet, coords){
     //make a new DOM element
     this.dom_element = document.createElement("div");
     this.dom_element.setAttribute("class", "invader");
+    this.dom_element.className+= " typeOne first";
 
     //add DOM element to the screen
     this.fleet.dom_element.appendChild( this.dom_element );

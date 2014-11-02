@@ -10,8 +10,8 @@
 
 #launcher{
     position: relative;
-    width: 50px;
-    height: 30px;
+    width: 80px;
+    height: 20px;
     left: 0px;
     top: 0px;
     background-color: #00FF00;
@@ -31,15 +31,25 @@
 .invader{
     position: absolute;
     width: 40px;
-    height: 40px;
+    height: 30px;
     left: 0px;
     top: 0px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    /*background-color: #fff;*/
-    background-image: url('images/invader.png');
-    background-size: cover;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
+
+.typeOne.first{
+    background-image: url('/images/invader1a.png');
+}
+
+.typeTwo.second{
+    background-image: url('/images/invader1b.png');
+}
+
+
+/*There are three more types of invader that need to be written*/
 
 #fleet{
     position: absolute;
