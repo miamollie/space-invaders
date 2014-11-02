@@ -6,6 +6,7 @@ function Fleet(game_screen, num_invaders){
     SuperElement.call( this );
 
     this.missileFrequency = 4000; // initially invaders fire roughly every 5 seconds
+    this.changeIcon = 500;
 
     this.invaders = [];
     this.game_screen = game_screen;
@@ -81,13 +82,6 @@ Fleet.prototype.move = function() {
     //otherwise keep moving
     else {
         this.setX(this.getX() + (this.offsetX * this.direction));
-    }
-
-//Make the invaders change how they look
-
-    for( var i = 0; i < this.invaders.length; i++ ){
-        // this.invaders[i].dom_element. TOGGLE CLASS FIRST SECOND IMAGE
-
     }
 
 };
@@ -198,6 +192,7 @@ Fleet.prototype.receivedHit = function(otherThing, invaderHitIndex) {
 
     //Increase the speed of movement of the fleet
     this.offsetX += 0.1;//
+    this.changeIcon -= 10;
 
 
 }

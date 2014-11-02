@@ -18,13 +18,20 @@
 
 
 <script>
-    var launcher;
-    var fleet;
+
+//Initial setup
+    var launcher = null;
+    var fleet = null;
     var missile =  null;
     var bunkers = [];
     var game_screen = null;
     var now = 0;
     var oldTime = 0;
+    var oldIconTime = 0;
+    var timeDif = 0;
+    var iconTimeDif = 0;
+
+
 
     window.onload = function (){
         game_screen = new GameScreen();
@@ -76,10 +83,19 @@
 
             //Randomly Fire - at a frequency dictated by the state of the game
             now = Date.now(); // new date with number of milliseconds since 1970
-            var timeDif = now - oldTime;
+            timeDif = now - oldTime;
             if( timeDif > fleet.missileFrequency ){
                 game_screen.invaderMissiles.push(fleet.randomFire());
                 oldTime = now; //reset oldTime to now
+            }
+
+            //Make the invaders Change appearance -  TODO, should this be a function of fleet, whatever the case there is definitely a better way of doing this... but I'm sleepy now
+            iconTimeDif = now - oldIconTime
+            if( iconTimeDif > fleet.changeIcon ){
+                for( var i = 0; i < fleet.invaders.length; i++ ){
+                    fleet.invaders[i].dom_element.classList.toggle("second");
+                }
+                oldIconTime = now;
             }
 
 
