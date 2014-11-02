@@ -9,6 +9,8 @@
     <script src="/js/launcher.js"></script>
     <script src="/js/fleet.js"></script>
     <script src="/js/missile.js"></script>
+    <script src="/js/bunker.js"></script>
+    <script src="/js/bunkerBlock.js"></script>
 
 
 </head>
@@ -30,7 +32,12 @@
         launcher =  new Launcher(game_screen);
         fleet = new Fleet(game_screen, 50);
 
-
+        var bunkerX = 250;
+        var bunkerY = 450; //TODO associate bunkerX and bunkerY width of game_screen
+        for( var i = 0; i < 3; i++ ){
+            bunkers.push(new Bunker(game_screen, bunkerX, bunkerY));
+            bunkerX += 250;
+        }
 
         //set up the controls
         this.onkeydown = function(e){
@@ -87,31 +94,43 @@
             }
 
             //check for collisions and handle appropriately
-            //For all launcher game_screen.launcherMissiles -   did you hit an invader
+
+            //Missiles fired up by the launcher
             if( game_screen.launcherMissiles.length > 0 ){
                 for( var i = 0; i < game_screen.launcherMissiles.length; i++ ){
-                     if( fleet.overlaps(game_screen.launcherMissiles[i]) ){
+                    // check for invader hits
+                    if( fleet.overlaps(game_screen.launcherMissiles[i]) ){
                         game_screen.dom_element.removeChild(game_screen.launcherMissiles[i].dom_element); //Delete the missile from the screen
                         game_screen.launcherMissiles.splice(i, 1); //remove the missile from the array
+                    }
+
+                    // check for bunker hits
+                    for( var j = 0; j < bunkers.length; j++ ){
+                        if( bunkers[j].overlaps(game_screen.launcherMissiles[i]) ){
+                            game_screen.dom_element.removeChild(game_screen.launcherMissiles[i].dom_element); //Delete the missile from the screen
+                            game_screen.launcherMissiles.splice(i, 1);
+                        }
                     }
                 }
             }
 
-            //For all invader missiles  -   did you hit  the launcher or a bunker??
+            //Bombs dropped by the invaders
             if( game_screen.invaderMissiles.length > 0 ){
                 for( var i = 0; i < game_screen.invaderMissiles.length; i++ ){
+                    //Check for launcher hits
                     if( launcher.overlaps(game_screen.invaderMissiles[i]) ){
                         game_screen.dom_element.removeChild(game_screen.invaderMissiles[i].dom_element); //Delete the missile from the screen
                         game_screen.invaderMissiles.splice(i, 1); // Remove the missile from the array
-                    };
+                    }
 
-                    // if( bunkers.overlaps(game_screen.invaderMissiles[i])){
-                        // game_screen.dom_element.removeChild(game_screen.launcherMissiles[i].dom_element); //Delete the missile from the screen
+                    //Check for bunker hits
+                    for( var j = 0; j < bunkers.length; j++ ){
+                        if( bunkers[j].overlaps(game_screen.invaderMissiles[i]) ){
+                            game_screen.dom_element.removeChild(game_screen.invaderMissiles[i].dom_element); //Delete the missile from the screen
+                            game_screen.invaderMissiles.splice(i, 1);
 
-                        // game_screen.launcherMissiles.splice(i, 1);
-
-                    // };
-
+                        }
+                    }
                 }
             }
 

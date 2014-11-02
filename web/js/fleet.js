@@ -3,7 +3,7 @@
 
 function Fleet(game_screen, num_invaders){
     //inheritance
-    SuperElement.call( this, [0] );
+    SuperElement.call( this );
 
     this.missileFrequency = 4000; // initially invaders fire roughly every 5 seconds
 
@@ -19,7 +19,7 @@ function Fleet(game_screen, num_invaders){
     game_screen.dom_element.appendChild( this.dom_element );
 
 
-    // Speed that the fleet moves from left to right and down, which will be updated as the invaders are destroyed
+    //Place the fleet on screen
     this.setX(20);
     this.setY(20);
 
@@ -40,7 +40,7 @@ function Fleet(game_screen, num_invaders){
 
         x += this.invaders[i-1].outerWidth();
 
-        if( (i % 10 == 0 ) ){
+        if( i % 10 == 0  ){
             y += this.invaders[i-1].outerHeight();
             fleet_width = x;
             x = -this.invaders[i-1].marginLeft();
