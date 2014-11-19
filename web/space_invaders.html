@@ -4,6 +4,7 @@
     <link href="/css/css.css" rel="stylesheet" type="text/css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/js/super.js"></script>
+    <script src="/js/game.js"></script>
     <script src="/js/gameScreen.js"></script>
     <script src="/js/invader.js"></script>
     <script src="/js/launcher.js"></script>
@@ -11,171 +12,57 @@
     <script src="/js/missile.js"></script>
     <script src="/js/bunker.js"></script>
     <script src="/js/bunkerBlock.js"></script>
-    <script src="/js/game.js"></script>
+
 
 
 </head>
 <body>
 
+    <div id="#game_screen">
+        <button id="play">Play</button>
+        <button id="pause">Pause</button>
+        <button id="resume">Resume</button>
+
+    </div>
+
 
 <script>
 
-//Initial setup
-    var launcher = null;
-    var fleet = null;
-    var missile =  null;
-    var bunkers = [];
-    var game_screen = null;
-    var now = 0;
-    var oldTime = 0;
-    var oldIconTime = 0;
-    var timeDif = 0;
-    var iconTimeDif = 0;
+    window.onload = function(){
 
+        var game = null;
 
+        var playButton = document.getElementById("play");
+        playButton.disabled = false;
+        var resumeButton = document.getElementById("resume");
+        resumeButton.disabled = true;
+        var pauseButton = document.getElementById("pause");
+        pauseButton.disabled = true;
 
-    window.onload = function (){
-
-
-
-        game_screen = new GameScreen();
-        document.body.appendChild(game_screen.dom_element);
-        launcher =  new Launcher(game_screen);
-        fleet = new Fleet(game_screen);
-
-
-
-        var bunkerX = 250;
-        var bunkerY = 450; //TODO associate bunkerX and bunkerY width of game_screen
-        for( var i = 0; i < 3; i++ ){
-            bunkers.push(new Bunker(game_screen, bunkerX, bunkerY));
-            bunkerX += 250;
+        playButton.onclick = function(){
+            game = new Game();
+            game.initialise();
+            game.play(); //everything happens in here!
+            playButton.disabled = true;
+            pauseButton.disabled = false;
         }
 
-        //set up the controls
-        this.onkeydown = function(e){
-            //make launcher go right
-            if( e.keyCode == 68 ){
-                launcher.goRight();
+        pauseButton.onclick = function(){
 
-            //make launcher go left
-            } else if( e.keyCode == 65 ){
-                launcher.goLeft();
-
-            //launcher fires a missile
-            }  else if( e.keyCode == 32 ){
-                missile = launcher.fireMissile();
-                game_screen.launcherMissiles.push(missile);
-            }
-
+            pauseButton.disabled = true;
+            resumeButton.disabled = false;
+            //pause the game
+            game.pause();
         }
 
-
-        function upDateGame(){
-
-            // Move the fleet
-            fleet.move();
-
-            //Move the launcher missiles
-            for( var i = 0; i < game_screen.launcherMissiles.length; i++ ){
-                game_screen.launcherMissiles[i].goUp();
-
-                //if a missile goes off the screen remove it from the array and hide it somehow
-                if( game_screen.launcherMissiles[0].getY() <= 0 ){
-                    game_screen.dom_element.removeChild(game_screen.launcherMissiles[0].dom_element);
-                    game_screen.launcherMissiles.shift();
-                }
-            }
-
-
-            //Randomly Fire - at a frequency dictated by the state of the game
-            now = Date.now(); // new date with number of milliseconds since 1970
-            timeDif = now - oldTime;
-            if( timeDif > fleet.missileFrequency ){
-                game_screen.invaderMissiles.push(fleet.randomFire());
-                oldTime = now; //reset oldTime to now
-            }
-
-
-            //Move the bombs down
-            for( var i = 0; i < game_screen.invaderMissiles.length; i++ ){
-                game_screen.invaderMissiles[i].goDown();
-                //if a missile goes off the screen remove it from the array and hide it somehow
-                if( game_screen.invaderMissiles[0].getY() >= game_screen.height() ){
-                    game_screen.dom_element.removeChild(game_screen.invaderMissiles[0].dom_element);
-                    game_screen.invaderMissiles.shift();
-                }
-            }
-
-
-            //Missiles fired up by the launcher
-
-            // check for invader hits
-            if( game_screen.launcherMissiles.length > 0 ){
-                for( var i = 0; i < game_screen.launcherMissiles.length; i++ ){
-                    if( fleet.overlaps(game_screen.launcherMissiles[i]) ){
-                        game_screen.dom_element.removeChild(game_screen.launcherMissiles[i].dom_element); //Delete the missile from the screen
-                        game_screen.launcherMissiles.splice(i, 1); //remove the missile from the array
-                    }
-                }
-            }
-
-            // check for bunker hits
-            if( game_screen.launcherMissiles.length > 0 ){
-                for( var i = 0; i < game_screen.launcherMissiles.length; i++ ){
-                    for( var j = 0; j < bunkers.length; j++ ){
-                        if( bunkers[j].overlaps(game_screen.launcherMissiles[i]) ){
-                            game_screen.dom_element.removeChild(game_screen.launcherMissiles[i].dom_element); //Delete the missile from the screen
-                            game_screen.launcherMissiles.splice(i, 1);
-                        }
-                    }
-                }
-            }
-
-
-            //Bombs dropped by the invaders
-            if( game_screen.invaderMissiles.length > 0 ){
-                for( var i = 0; i < game_screen.invaderMissiles.length; i++ ){
-                    //Check for launcher hits
-                    if( launcher.overlaps(game_screen.invaderMissiles[i]) ){
-                        game_screen.dom_element.removeChild(game_screen.invaderMissiles[i].dom_element); //Delete the missile from the screen
-                        game_screen.invaderMissiles.splice(i, 1); // Remove the missile from the array
-                    }
-
-                    //Check for bunker hits
-                    for( var j = 0; j < bunkers.length; j++ ){
-                        if( bunkers[j].overlaps(game_screen.invaderMissiles[i]) ){
-                            game_screen.dom_element.removeChild(game_screen.invaderMissiles[i].dom_element); //Delete the missile from the screen
-                            game_screen.invaderMissiles.splice(i, 1);
-
-                        }
-                    }
-                }
-            }
-
-
-            //Make the invaders Change appearance -  TODO, should this be a function of fleet, whatever the case there is definitely a better way of doing this... but I'm sleepy now
-            iconTimeDif = now - oldIconTime;
-            if( iconTimeDif > fleet.changeIcon ){
-                fleet.animate();
-                oldIconTime = now;
-            }
-
-
-            if( (launcher.lives <= 0) || (fleet.invaders.length == 0) || (fleet.getY() + fleet.height() > game_screen.threshold) ){
-                clearInterval(game_interval);
-
-                //TODOd delete game object, print a replay screen..
-            }
-
-        };
-
-
-        //this is the game God thingy mabobby
-        var game_interval = setInterval( upDateGame, 25 );
+        resumeButton.onclick = function(){
+            pauseButton.disabled = false;
+            resumeButton.disabled = true;
+            //pause the game
+            game.play();
+        }
 
     };
-
 
 
 </script>
