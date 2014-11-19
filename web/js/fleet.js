@@ -69,6 +69,10 @@ function Fleet(game_screen){
         bottom: 0
     }
 
+    this.updateLeft = false;
+    this.updateRight = false;
+    this.updateBottom = false;
+
 
 }
 
@@ -90,12 +94,33 @@ Fleet.prototype.move = function() {
     if( (current_position >= right_edge) && (this.direction == (1)) ){
         this.direction = (-1);
         this.setY(this.getY() + this.offsetY);
+        if( updateRight ){
+            this.setWidth(this.width() - this.invaders[0][0].outerWidth());
+            updateRight = false;
+
+        } else if( updateBottom ){
+            this.setWidth(this.height() - this.invaders[0][0].outerHeight());
+            updateBottom = false;
+
+        }
+
     }
 
     //if the fleet hits the right edge, go down and change this.direction
     else if( (current_position <= left_edge) && (this.direction == (-1)) ){
         this.direction = 1;
         this.setY(this.getY() + this.offsetY);
+        if( updateLeft ){
+            //TO-DO update the coordinates of all invaders to be  - width of one invader on the x-axis
+            this.setWidth(this.width() - this.invaders[0][0].outerWidth());
+            updateLeft = false;
+
+        } else if ( updateBottom ){
+            this.setWidth(this.height() - this.invaders[0][0].outerHeight());
+            updateBottom = false;
+
+        }
+
     }
 
     //otherwise keep moving
@@ -229,102 +254,96 @@ Fleet.prototype.animate = function() {
 }
 
 
+//Update the extremities of the fleet based on remaining invaders
+Fleet.prototype.updateExtremities =  function() {
+
+    var currentLeftExtremity = {
+        r: 0,
+        c: this.statuses[0].length
+    };
+
+    var currentRightExtremity = {
+        r: 0,
+        c: 0
+    };
+
+
+    var currentBottomExtremity = this.extremities.bottom;
+
+    var tempLeft = 0;
+    var tempRight = 0;
+
+        //Loop through rows starting at the top
+
+        for( var r = 0; r < this.statuses.length; r++ ){
+
+            //Find first occurrence of 0 in row r
+            tempLeft = this.statuses[r].indexOf(1);
+
+            if( (tempLeft != (-1)) && (tempLeft <= currentLeftExtremity.c)){
+                console.log("left update");
+                //set this row's left as the leftmost left
+                currentLeftExtremity.c =  tempLeft;
+                currentLeftExtremity.r = r;
+            }
+
+
+             //Find last occurrence of 0 in row r
+             tempRight = this.statuses[r].lastIndexOf(1);
+
+             if( (tempRight != (-1)) && (tempRight >= currentRightExtremity.c)){
+                console.log("right update");
+                 //set this row's left as the leftmost left
+                 currentRightExtremity.c =  tempRight;
+                 currentRightExtremity.r = r;
+             }
+
+             //find out if the whole row is zeros
+
+            if (tempRight == (-1)){ // i.e. if there are no 1s in the row
+                console.log("bottom update");
+                currentBottomExtremity = r -1;
+            }
+
+        }
+
+
+
+        //if an update to the extremities is detected, update height and width accordingly
+        if( (this.extremities.left.r > currentLeftExtremity.r) || (this.extremities.left.c != currentLeftExtremity.c) ){
+            // update the coordinates of all the invaders and reduce the width of the DOM element
+            this.extremities.left.r =  currentLeftExtremity.r;
+            this.extremities.left.c = currentLeftExtremity.c;
+            updateLeft = true;
+        }
+
+
+        // console.log("this row " + this.extremities.right.r + " current row: " + currentRightExtremity.r + "  this column: " +  this.extremities.right.c + " current column: " + currentRightExtremity.c);
+        if( (this.extremities.right.r < currentRightExtremity.r) || (this.extremities.right.c != currentRightExtremity.c)){
+            // update the coordinates of all the invaders and reduce the width of the DOM element
+            this.extremities.right.r =  currentRightExtremity.r;
+            this.extremities.right.c = currentRightExtremity.c;
+            updateRight = true;
+
+        }
+
+        if( this.extremities.bottom < currentBottomExtremity ){
+            // update the coordinates of all the invaders and reduce the width of the DOM element
+            this.extremities.bottom.c = currentBottomExtremity;
+            updateBottom = true;
+
+        }
+
+
+    }
+
+
+
 
 //Update the extremities of the fleet based on remaining invaders
 Fleet.prototype.updateDimensions =  function() {
 
 
- //     //First update the extremities
-
- //     var currentLeftExtremity = {
- //         r: fleet.extremities.left.r,
- //         c: fleet.extremities.left.c
- //     }
-
- //     var currentRightExtremity = {
- //         r: 0,
- //         c: 0
- //     }
-
-
- //    var currentBottomExtremity = fleet.extremities.bottom; // r
-
- //    var tempLeft = 0;
- //    var tempRight = 0;
-
- //    //Loop through rows starting at the top
-
- //    for( var r = 0; r < fleet.statuses.length; r++ ){
-
-    //  //Find first occurrence of 0 in row r
- //     // tempLeft = fleet.statuses[r].indexOf(0);
- //     // //test if there is in fact a zero in this row, and if the tempLeft in this row is less than the temp left in the current longest row
- //     // if( (tempLeft != (-1)) && (tempLeft < currentLeftExtremity.c)){
- //     //  //set this row's left as the leftmost left
- //     //  currentLeftExtremity.c =  tempLeft;
- //     //  currentLeftExtremity.r = r;
- //     //  console.log("here");
- //     // }
-
-
-    //  //Find last occurrence of 0 in row r
- //     tempRight = fleet.statuses[r].lastIndexOf(1);
-
- //     console.log("R: " + r + " Last index of 1: " + tempRight + " current extremity : " + currentRightExtremity.c);
-
- //     if( (tempRight != (-1)) && (tempRight >= currentRightExtremity.c)){
- //         //set this row's left as the leftmost left
- //         currentRightExtremity.c =  tempRight;
- //         currentRightExtremity.r = r;
- //         console.log("here");
- //     }
-
-
-
-    //  // //find out if the whole row is zeros
-    //  // var j = 0;
-    //  // for( j; j<fleet.statuses[r].length; j++ ){
-    //  //  if( fleet.statuses[r][j] == 1 ){
-    //  //  break;
-    //  //  }
-    //  // }
-    //  // if( (j == (fleet.statuses[r].length -1)) && (fleet.statuses[r][j] == 0) ){
-    //  //  currentBottomExtremity = r -1;
-    //  //  //Since we're looping from the top down, there is no need to check if this is the lowest row., if row[r] is all zeros, then r-1 is the last extremity
-    //  // }
-
-
- //    }
-
-
- //    //if an update to the extremities is detected, update height and width accordingly
-
- //    if( (fleet.extremities.left.r != currentLeftExtremity.r) || (fleet.extremities.left.c != currentLeftExtremity.c) ){
- //        // update the coordinates of all the invaders and reduce the width of the DOM element
- //        console.log("Left side width must be updated");
- //    }
-
-    // console.log("Fleet row " + fleet.extremities.right.r + " current row: " + currentRightExtremity.r + "  fleet column: " +  fleet.extremities.right.c + " current column: " + currentRightExtremity.c);
- //    if( (fleet.extremities.right.r != currentRightExtremity.r) || (fleet.extremities.right.c != currentRightExtremity.c) ){
- //        // update the coordinates of all the invaders and reduce the width of the DOM element
- //        console.log("Right side width must be updated");
- //    }
-
-    // // console.log(fleet.extremities.bottom  + " " + currentBottomExtremity);
- // //    if( fleet.extremities.bottom != currentBottomExtremity ){
- // //        // update the coordinates of all the invaders and reduce the width of the DOM element
- // //        console.log("Height must be updated");
- // //    }
-
- //    //Update the fleet extremities
-
-
-
-    // currentLeftExtremity.r = fleet.extremities.left.r; // [r,c]
- //    currentLeftExtremity.c = fleet.extremities.left.c; // [r,c]
- //    currentRightExtremity.r = fleet.extremities.right.r; // [r,c]
- //    currentRightExtremity.c = fleet.extremities.right.c; // [r,c]
- //    currentBottomExtremity = fleet.extremities.bottom; // r
 
 }
 

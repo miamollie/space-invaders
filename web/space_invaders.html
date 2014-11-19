@@ -11,6 +11,7 @@
     <script src="/js/missile.js"></script>
     <script src="/js/bunker.js"></script>
     <script src="/js/bunkerBlock.js"></script>
+    <script src="/js/game.js"></script>
 
 
 </head>
@@ -34,6 +35,9 @@
 
 
     window.onload = function (){
+
+
+
         game_screen = new GameScreen();
         document.body.appendChild(game_screen.dom_element);
         launcher =  new Launcher(game_screen);

@@ -41,175 +41,167 @@
 
 	function Fleet(){
 
-	 this.statuses = []; // A 2D array of 0 and 1 where 1 indicates invader present and 2 indicates invader absent
+		this.statuses = []; // A 2D array of 0 and 1 where 1 indicates invader present and 2 indicates invader absent
 
-	 //Populate the array
-	 for( var i = 0; i < 5; i++ ){
-	 	this.statuses[i] = new Array(10);
+		 //Populate the array
+		for( var i = 0; i < 5; i++ ){
+		 	this.statuses[i] = new Array(10);
 
-	 	for( var j = 0; j < 10; j++ ){
-	 		this.statuses[i][j] = 1;
-	 	}
-	 }
-
-
-	 this.extremities = {
-        left: { r: 4, c: 0 }, //leftmost extremity starts at bottom left
-        right: {r: 4, c: 9 }, //rightmost extremity starts at bottom right
-        bottom: 0
-    }
-}
+			for( var j = 0; j < 10; j++ ){
+		 		this.statuses[i][j] = 1;
+		 	}
+		 }
 
 
-Fleet.prototype.updateStatus =  function(){
-	var theForm = document.forms["theform"];
-	var rowInput = theForm.elements["row"];
-	var colInput = theForm.elements["column"];
-
-	var r = rowInput.value;
-	var c = colInput.value;
-	this.statuses[r][c] = 0;
-}
+		this.extremities = {
+	        left: { r: 4, c: 0 }, //leftmost extremity starts at bottom left
+	        right: {r: 4, c: 9 }, //rightmost extremity starts at bottom right
+	        bottom: 0
+	    }
+	}
 
 
-Fleet.prototype.printString = function(){
-	var string = "";
-	for( var i = 0; i < this.statuses.length; i++){
-		for( var j =0; j< this.statuses[i].length; j++){
-			string+= this.statuses[i][j] + " ";
+	Fleet.prototype.updateStatus =  function(){
+		var theForm = document.forms["theform"];
+		var rowInput = theForm.elements["row"];
+		var colInput = theForm.elements["column"];
+
+		this.statuses[rowInput.value][colInput.value] = 0;
+	}
+
+
+	Fleet.prototype.printString = function(){
+		var string = "";
+		for( var i = 0; i < this.statuses.length; i++){
+			for( var j =0; j< this.statuses[i].length; j++){
+				string+= this.statuses[i][j] + " ";
+			}
+			string+= "<br>";
 		}
-		string+= "<br>";
-	}
-	return string;
-	console.log("print  fleet");
-}
-
-
-
-
-Fleet.prototype.printExtremities = function(){
-	var string = "Fleet Extremities: <br>";
-	string+= "Left: Row " + this.extremities.left.r + " Column " + this.extremities.left.c + "<br>";
-	string+= "Right: Row " + this.extremities.right.r + " Column " + this.extremities.right.c + "<br>";
-	string+= "Bottom: Row " + this.extremities.bottom + "<br>";
-	return string;
-}
-
-
-
-//Update the extremities of the fleet based on remaining invaders
-Fleet.prototype.updateExtremities =  function() {
-
-
-     //First update the extremities
-
-     var currentLeftExtremity = {
-     	r: this.extremities.left.r,
-     	c: this.extremities.left.c
-     }
-
-     var currentRightExtremity = {
-     	r: 0,
-     	c: 0
-     }
-
-
-    var currentBottomExtremity = this.extremities.bottom; // r
-
-    var tempLeft = 0;
-    var tempRight = 0;
-
-    //Loop through rows starting at the top
-
-    for( var r = 0; r < this.statuses.length; r++ ){
-
-	    //Find first occurrence of 0 in row r
-	    tempLeft = this.statuses[r].indexOf(0);
-
-	    if( (tempLeft != (-1)) && (tempLeft < currentLeftExtremity.c)){
-	      //set this row's left as the leftmost left
-	      currentLeftExtremity.c =  tempLeft;
-	      currentLeftExtremity.r = r;
-	    }
-
-
-	     //Find last occurrence of 0 in row r
-	     tempRight = this.statuses[r].lastIndexOf(1);
-
-	    if( (tempRight != (-1)) && (tempRight >= currentRightExtremity.c)){
-	         //set this row's left as the leftmost left
-	         currentRightExtremity.c =  tempRight;
-	         currentRightExtremity.r = r;
-	         console.log("here");
-	    }
-
-	     //find out if the whole row is zeros
-	     var j = 0;
-	    for( j; j<this.statuses[r].length; j++ ){
-	     	if( this.statuses[r][j] == 1 ){
-	     		break;
-	     	}
-	    }
-
-	    if( (j == (this.statuses[r].length -1)) && (this.statuses[r][j] == 0) ){
-	     	currentBottomExtremity = r -1;
-	      //Since we're looping from the top down, there is no need to check if this is the lowest row., if row[r] is all zeros, then r-1 is the last extremity
-	 	}
-
+		return string;
 	}
 
 
-
-    //if an update to the extremities is detected, update height and width accordingly
-    if( (this.extremities.left.r != currentLeftExtremity.r) || (this.extremities.left.c != currentLeftExtremity.c) ){
-        // update the coordinates of all the invaders and reduce the width of the DOM element
-        console.log("Left side width must be updated");
-        this.extremities.left.r =  currentLeftExtremity.r;
-        this.extremities.left.c = currentLeftExtremity.c;
-    }
-
-
-    // console.log("this row " + this.extremities.right.r + " current row: " + currentRightExtremity.r + "  this column: " +  this.extremities.right.c + " current column: " + currentRightExtremity.c);
-    if( (this.extremities.right.r != currentRightExtremity.r) || (this.extremities.right.c != currentRightExtremity.c) ){
-        // update the coordinates of all the invaders and reduce the width of the DOM element
-        console.log("Right side width must be updated");
-        this.extremities.right.r =  currentRightExtremity.r;
-        this.extremities.right.c = currentRightExtremity.c;
-
-    }
-
-    console.log(this.extremities.bottom  + " " + currentBottomExtremity);
-    if( this.extremities.bottom != currentBottomExtremity ){
-        // update the coordinates of all the invaders and reduce the width of the DOM element
-        console.log("Height must be updated");
-        this.extremities.bottom.c = currentBottomExtremity;
-
-    }
+	Fleet.prototype.printExtremities = function(){
+		console.log("print extremities");
+		var string = "Fleet Extremities: <br>";
+		string+= "Left: Row " + this.extremities.left.r + " Column " + this.extremities.left.c + "<br>";
+		string+= "Right: Row " + this.extremities.right.r + " Column " + this.extremities.right.c + "<br>";
+		string+= "Bottom: Row " + this.extremities.bottom + "<br>";
+		return string;
+	}
 
 
-}
+	//Update the extremities of the fleet based on remaining invaders
+	Fleet.prototype.updateExtremities =  function() {
+
+		console.log("update extremities");
+
+	     var currentLeftExtremity = {
+	     	r: 0,
+	     	c: this.statuses[0].length
+	     };
+
+	     var currentRightExtremity = {
+	     	r: 0,
+	     	c: 0
+	     };
+
+
+	    var currentBottomExtremity = this.extremities.bottom;
+
+	    var tempLeft = 0;
+	    var tempRight = 0;
+
+	    //Loop through rows starting at the top
+
+	    for( var r = 0; r < this.statuses.length; r++ ){
+
+		    //Find first occurrence of 0 in row r
+		    tempLeft = this.statuses[r].indexOf(1);
+
+		    if( (tempLeft != (-1)) && (tempLeft <= currentLeftExtremity.c)){
+		    	console.log("left update");
+			    //set this row's left as the leftmost left
+			    currentLeftExtremity.c =  tempLeft;
+			    currentLeftExtremity.r = r;
+		 	}
+
+
+		     //Find last occurrence of 0 in row r
+		    tempRight = this.statuses[r].lastIndexOf(1);
+
+		    if( (tempRight != (-1)) && (tempRight >= currentRightExtremity.c)){
+		    	console.log("right update");
+		         //set this row's left as the leftmost left
+		        currentRightExtremity.c =  tempRight;
+		        currentRightExtremity.r = r;
+		    }
+
+		     //find out if the whole row is zeros
+
+		    if (tempRight == (-1)){ // i.e. if there are no 1s in the row
+		    	console.log("bottom update");
+		    	currentBottomExtremity = r -1;
+		    }
+
+		}
 
 
 
-window.onload = function(){
+	    //if an update to the extremities is detected, update height and width accordingly
+	    if( (this.extremities.left.r > currentLeftExtremity.r) || (this.extremities.left.c != currentLeftExtremity.c) ){
+	        // update the coordinates of all the invaders and reduce the width of the DOM element
+	        console.log("Left side width must be updated: "  + this.extremities.left.r +  " " + this.extremities.left.c + " New: " + currentLeftExtremity.r + " " + currentLeftExtremity.c);
+	        this.extremities.left.r =  currentLeftExtremity.r;
+	        this.extremities.left.c = currentLeftExtremity.c;
+	        updateLeft = true;
+	    }
 
 
-	var fleet = new Fleet();
-	// fleet.updateStatus;
-	var array = document.getElementById("array");
-	array.innerHTML = fleet.printString();
-	var extremities = document.getElementById("extremities");
-	extremities.innerHTML = fleet.printExtremities();
+	    // console.log("this row " + this.extremities.right.r + " current row: " + currentRightExtremity.r + "  this column: " +  this.extremities.right.c + " current column: " + currentRightExtremity.c);
+	    if( (this.extremities.right.r < currentRightExtremity.r) || (this.extremities.right.c != currentRightExtremity.c)){
+	        // update the coordinates of all the invaders and reduce the width of the DOM element
+	        console.log("Right side width must be updated -  Current: " + this.extremities.right.r +  " " + this.extremities.right.c + " New: " + currentRightExtremity.r + " " + currentRightExtremity.c);
+	        this.extremities.right.r =  currentRightExtremity.r;
+	        this.extremities.right.c = currentRightExtremity.c;
+	        updateRight = true;
+
+	    }
+
+	    if( this.extremities.bottom < currentBottomExtremity ){
+	        // update the coordinates of all the invaders and reduce the width of the DOM element
+	        this.extremities.bottom.c = currentBottomExtremity;
+	        updateBottom = true;
+
+	    }
 
 
-	document.getElementById("submitButton").onclick = function() {
-		fleet.updateStatus();
-		fleet.updateExtremities();
+	}
+
+
+
+	window.onload = function(){
+
+		var fleet = new Fleet();
+		// fleet.updateStatus;
+		var array = document.getElementById("array");
 		array.innerHTML = fleet.printString();
+		var extremities = document.getElementById("extremities");
+		extremities.innerHTML = fleet.printExtremities();
+
+
+		document.getElementById("submitButton").onclick = function() {
+			fleet.updateStatus();
+			fleet.updateExtremities();
+			array.innerHTML = fleet.printString();
+			extremities.innerHTML = fleet.printExtremities();
+
+
+		};
+
+
 	};
-
-
-};
 
 
 
