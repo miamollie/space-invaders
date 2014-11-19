@@ -1,0 +1,87 @@
+#game_screen{
+    background-color: #000;
+    width: 1200px;
+    height: 550px;
+    position: relative;
+    left: 0px;
+    top: 0px;
+
+}
+
+#launcher{
+    position: relative;
+    width: 80px;
+    height: 20px;
+    left: 0px;
+    top: 0px;
+    background-color: #00FF00;
+}
+
+
+.missile{
+    position: absolute;
+    width: 3px;
+    height: 10px;
+    left: 0px;
+    top: 0px;
+    background-color: #fff;
+}
+
+
+.invader{
+    position: absolute;
+    width: 40px;
+    height: 30px;
+    left: 0px;
+    top: 0px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.typeOne.first{
+    background-image: url('/images/invader1a.png');
+}
+
+.typeOne.second{
+    background-image: url('/images/invader1b.png');
+}
+
+
+.invader.explosion{
+    background-image: url('/images/explosionWhite.png');
+}
+
+#launcher.explosion{
+    background-image: url('/images/explosionGreen.png');
+}
+
+/*There are three more types of invader that need to be written*/
+
+#fleet{
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    top: 0px;
+    left: 0px;
+}
+
+
+.bunker{
+    position: absolute;
+    width: 120px;
+    height: 40px;
+    left: 0px;
+    top: 0px;
+}
+
+
+.bunkerBlock{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 0px;
+    top: 0px;
+    background-color: #00FF00;
+}
