@@ -2,7 +2,6 @@
 <html>
 <head>
     <link href="/css/css.css" rel="stylesheet" type="text/css">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/js/super.js"></script>
     <script src="/js/game.js"></script>
     <script src="/js/gameScreen.js"></script>
@@ -22,11 +21,12 @@
         <button id="play">Play</button>
         <button id="pause">Pause</button>
         <button id="resume">Resume</button>
+        <button id="update">Update</button>
 
     </div>
 
 
-<script>
+    <script>
 
     window.onload = function(){
 
@@ -38,34 +38,38 @@
         resumeButton.disabled = true;
         var pauseButton = document.getElementById("pause");
         pauseButton.disabled = true;
+        var updateButton = document.getElementById("update");
 
         playButton.onclick = function(){
             game = new Game();
             game.initialise();
-            game.play(); //everything happens in here!
-            playButton.disabled = true;
-            pauseButton.disabled = false;
+            // game.update();
+            // game.play(); //everything happens in here!
+            // playButton.disabled = true;
+            // pauseButton.disabled = false;
         }
 
+
+        updateButton.onclick = function(){
+            game.update();
+        }
         pauseButton.onclick = function(){
 
             pauseButton.disabled = true;
             resumeButton.disabled = false;
-            //pause the game
             game.pause();
         }
 
         resumeButton.onclick = function(){
             pauseButton.disabled = false;
             resumeButton.disabled = true;
-            //pause the game
             game.play();
         }
 
     };
 
 
-</script>
+    </script>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
 /* S C R E E N */
 function GameScreen(){
     //Inheritance
-    SuperElement.call( this, [0] );
+    SuperElement.call( this );
 
     //make a new DOM element
     this.dom_element = document.createElement("div");

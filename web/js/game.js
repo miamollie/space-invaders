@@ -12,11 +12,13 @@ function Game(){
     this.invaderMissiles = [];
     this.launcherMissiles = [];
 
+    console.log("Fleet on object creation: " + this.fleet);
 }
 
 
 
 Game.prototype.initialise = function() {
+
 
     //Initialise the game
     this.game_screen = new GameScreen();
@@ -24,7 +26,7 @@ Game.prototype.initialise = function() {
     this.launcher =  new Launcher(this.game_screen);
     this.fleet = new Fleet(this.game_screen);
 
-
+    console.log("Fleet on initialise: " + this.fleet);
 
     var bunkerX = 250;
     var bunkerY = 450; //TODO associate bunkerX and bunkerY width of game_screen
@@ -32,12 +34,11 @@ Game.prototype.initialise = function() {
         this.bunkers.push(new Bunker(this.game_screen, bunkerX, bunkerY));
         bunkerX += 250;
     }
-
-
 };
 
 
 Game.prototype.update = function() {
+    console.log("Fleet on update: " + this.fleet);
 
     var now = 0;
     var oldTime = 0;
@@ -61,9 +62,11 @@ Game.prototype.update = function() {
         }
     }
 
+
+
     // Move the fleet
     this.fleet.move();
-    return;
+
 
     //Move the launcher missiles
     for( var i = 0; i < this.game_screen.launcherMissiles.length; i++ ){
@@ -74,10 +77,11 @@ Game.prototype.update = function() {
             this.game_screen.dom_element.removeChild(this.game_screen.launcherMissiles[0].dom_element);
             this.game_screen.launcherMissiles.shift();
         }
+
     }
 
 
-    //Randomly Fire - at a frequency dictated by the state of the game
+    // Randomly Fire - at a frequency dictated by the state of the game
     now = Date.now(); // new date with number of milliseconds since 1970
     timeDif = now - oldTime;
     if( timeDif > fleet.missileFrequency ){
@@ -86,7 +90,7 @@ Game.prototype.update = function() {
     }
 
 
-    //Move the bombs down
+    // Move the invader bombs down
     for( var i = 0; i < this.game_screen.invaderMissiles.length; i++ ){
         this.game_screen.invaderMissiles[i].goDown();
         //if a missile goes off the screen remove it from the array and hide it somehow
@@ -97,7 +101,7 @@ Game.prototype.update = function() {
     }
 
 
-    //Missiles fired up by the launcher
+
 
     // check for invader hits
     if( this.game_screen.launcherMissiles.length > 0 ){
@@ -122,7 +126,7 @@ Game.prototype.update = function() {
     }
 
 
-    //Bombs dropped by the invaders
+    // check for launcher hits
     if( this.game_screen.invaderMissiles.length > 0 ){
         for( var i = 0; i < this.game_screen.invaderMissiles.length; i++ ){
             //Check for launcher hits
@@ -166,6 +170,7 @@ Game.prototype.play = function() {
 
     //this is the game God thingy mabobby
     this.clock = setInterval( this.update, 25 );
+    console.log("Fleet on play: " + this.fleet);
 
 };
 

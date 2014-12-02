@@ -12,7 +12,7 @@ function Fleet(game_screen){
     this.dom_element = document.createElement("div");
     this.dom_element.setAttribute("id", "fleet");
 
-    game_screen.dom_element.appendChild( this.dom_element );
+    this.game_screen.dom_element.appendChild( this.dom_element );
 
     this.setX(20);
     this.setY(20);
