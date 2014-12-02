@@ -177,17 +177,15 @@ Game.prototype.play = function() {
 Game.prototype.pause = function() {
     //stop the clock
     clearInterval(this.clock);
-    //stop the controls
+
+    //stop the controls -  somehow overwrite onkeydown() function?
 };
 
 Game.prototype.end = function() {
     //Pause the game
     this.pause();
 
-
-    //remove any remaining invaders
-
-    //print a Game Over message with win/lose message
+    //print a Game Over message with win/lose message use ReplaceChild
 };
 
 

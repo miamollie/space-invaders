@@ -6,7 +6,7 @@ function GameScreen(){
     //Inheritance
     SuperElement.call( this );
 
-    //make a new DOM element
+    //make a new DOM element : got some fixing to do here to work with the game screen types
     this.dom_element = document.createElement("div");
     this.dom_element.setAttribute("id", "game_screen");
     this.threshold = 400; // TODO what should this value be?

@@ -21,6 +21,17 @@
         <button id="play">Play</button>
         <button id="pause">Pause</button>
         <button id="resume">Resume</button>
+        <div id="innerScreen">
+            <div id="startScreen" class="screenType">
+                <h1>Lucky Lot Invaders</h1>
+            </div>
+            <div id="pauseScreen" class="screenType">
+                <h1>Pause</h1>
+            </div>
+            <div id="endScreen" class="screenType">
+                <h1>Game Over</h1>
+            </div>
+        </div>
 
     </div>
 
@@ -28,6 +39,12 @@
     <script>
 
     window.onload = function(){
+        var startScreen = document.getElementById("startScreen");
+        startScreen.style.display = 'block';
+        var pauseScreen = document.getElementById("pauseScreen");
+        pauseScreen.style.display = 'none';
+        var endScreen = document.getElementById("endScreen")
+        endScreen.style.display = 'none';
 
         var game = null;
 
@@ -44,6 +61,7 @@
             game.play(); //everything happens in here!
             playButton.disabled = true;
             pauseButton.disabled = false;
+            startScreen.style.display = 'none'
         }
 
         pauseButton.onclick = function(){
@@ -51,15 +69,19 @@
             pauseButton.disabled = true;
             resumeButton.disabled = false;
             game.pause();
+            pauseScreen.style.display = 'block'
         }
 
         resumeButton.onclick = function(){
             pauseButton.disabled = false;
             resumeButton.disabled = true;
             game.play();
+            pauseScreen.style.display = 'none'
         }
 
     };
+
+    //TODO write a function that disables the correct buttons and hides/shows the correct DIVS
 
 
     </script>

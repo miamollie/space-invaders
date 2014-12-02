@@ -8,6 +8,20 @@
 
 }
 
+.screenType{
+    position: absolute;
+    z-index: 100;
+}
+
+
+.screenType h1{
+    color: #fff;
+}
+
+#startScreen.screenType h1{
+    color: #000;
+}
+
 #launcher{
     position: relative;
     width: 80px;
