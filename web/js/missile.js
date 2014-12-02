@@ -7,7 +7,7 @@ function Missile(game_screen){
     //make a new DOM element
     this.dom_element = document.createElement("div");
     this.dom_element.setAttribute("class", "missile");
-    game_screen.dom_element.appendChild( this.dom_element );
+    this.game_screen.dom_element.appendChild( this.dom_element );
 }
 
 //More inheritance stuff, note that "create()" doesn't work on older engines

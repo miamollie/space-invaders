@@ -34,6 +34,25 @@ Game.prototype.initialise = function() {
 };
 
 
+
+
+    //set up the controls
+    Game.prototype.onkeydown = function(e) {
+    //make launcher go right
+    if( e.keyCode == 68 ){
+        this.launcher.goRight();
+
+        //make launcher go left
+    } else if( e.keyCode == 65 ){
+        this.launcher.goLeft();
+
+        //launcher fires a missile
+    }  else if( e.keyCode == 32 ){
+        this.game_screen.launcherMissiles.push(this.launcher.fireMissile());
+    }
+}
+
+
 Game.prototype.update = function() {
 
     var now = 0;
@@ -41,23 +60,6 @@ Game.prototype.update = function() {
     var oldIconTime = 0;
     var timeDif = 0;
     var iconTimeDif = 0;
-
-    //set up the controls
-    this.onkeydown = function(e){
-        //make launcher go right
-        if( e.keyCode == 68 ){
-            this.launcher.goRight();
-
-            //make launcher go left
-        } else if( e.keyCode == 65 ){
-            this.launcher.goLeft();
-
-            //launcher fires a missile
-        }  else if( e.keyCode == 32 ){
-            this.game_screen.launcherMissiles.push(launcher.fireMissile());
-        }
-    }
-
 
 
     // Move the fleet
@@ -81,6 +83,7 @@ Game.prototype.update = function() {
     now = Date.now(); // new date with number of milliseconds since 1970
     timeDif = now - oldTime;
     if( timeDif > fleet.missileFrequency ){
+        console.log("here");
         this.game_screen.invaderMissiles.push(fleet.randomFire());
         oldTime = now; //reset oldTime to now
     }

@@ -37,8 +37,10 @@
 
 
     <script>
+    var game = null;
 
     window.onload = function(){
+        game = new Game();
         var startScreen = document.getElementById("startScreen");
         startScreen.style.display = 'block';
         var pauseScreen = document.getElementById("pauseScreen");
@@ -46,7 +48,6 @@
         var endScreen = document.getElementById("endScreen")
         endScreen.style.display = 'none';
 
-        var game = null;
 
         var playButton = document.getElementById("play");
         playButton.disabled = false;
@@ -56,12 +57,13 @@
         pauseButton.disabled = true;
 
         playButton.onclick = function(){
-            game = new Game();
             game.initialise();
             game.play(); //everything happens in here!
             playButton.disabled = true;
             pauseButton.disabled = false;
             startScreen.style.display = 'none'
+            document.onkeydown = function(e){ game.onkeydown(e);};
+
         }
 
         pauseButton.onclick = function(){

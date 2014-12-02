@@ -94,13 +94,13 @@ Fleet.prototype.move = function() {
     if( (current_position >= right_edge) && (this.direction == (1)) ){
         this.direction = (-1);
         this.setY(this.getY() + this.offsetY);
-        if( updateRight ){
+        if( this.updateRight ){
             this.setWidth(this.width() - this.invaders[0][0].outerWidth());
-            updateRight = false;
+            this.updateRight = false;
 
-        } else if( updateBottom ){
+        } else if( this.updateBottom ){
             this.setWidth(this.height() - this.invaders[0][0].outerHeight());
-            updateBottom = false;
+            this.updateBottom = false;
 
         }
 
@@ -110,14 +110,14 @@ Fleet.prototype.move = function() {
     else if( (current_position <= left_edge) && (this.direction == (-1)) ){
         this.direction = 1;
         this.setY(this.getY() + this.offsetY);
-        if( updateLeft ){
+        if( this.updateLeft ){
             //TO-DO update the coordinates of all invaders to be  - width of one invader on the x-axis
             this.setWidth(this.width() - this.invaders[0][0].outerWidth());
-            updateLeft = false;
+            this.updateLeft = false;
 
-        } else if ( updateBottom ){
+        } else if ( this.updateBottom ){
             this.setWidth(this.height() - this.invaders[0][0].outerHeight());
-            updateBottom = false;
+            this.updateBottom = false;
 
         }
 
@@ -314,7 +314,7 @@ Fleet.prototype.updateExtremities =  function() {
             // update the coordinates of all the invaders and reduce the width of the DOM element
             this.extremities.left.r =  currentLeftExtremity.r;
             this.extremities.left.c = currentLeftExtremity.c;
-            updateLeft = true;
+            this.updateLeft = true;
         }
 
 
@@ -323,14 +323,14 @@ Fleet.prototype.updateExtremities =  function() {
             // update the coordinates of all the invaders and reduce the width of the DOM element
             this.extremities.right.r =  currentRightExtremity.r;
             this.extremities.right.c = currentRightExtremity.c;
-            updateRight = true;
+            this.updateRight = true;
 
         }
 
         if( this.extremities.bottom < currentBottomExtremity ){
             // update the coordinates of all the invaders and reduce the width of the DOM element
             this.extremities.bottom.c = currentBottomExtremity;
-            updateBottom = true;
+            this.updateBottom = true;
 
         }
 
