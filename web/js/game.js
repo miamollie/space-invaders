@@ -68,7 +68,7 @@ Game.prototype.update = function() {
     this.fleet.move();
 
 
-    //Move the launcher missiles
+    // //Move the launcher missiles
     for( var i = 0; i < this.game_screen.launcherMissiles.length; i++ ){
         this.game_screen.launcherMissiles[i].goUp();
 
