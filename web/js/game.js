@@ -12,7 +12,6 @@ function Game(){
     this.invaderMissiles = [];
     this.launcherMissiles = [];
 
-    console.log("Fleet on object creation: " + this.fleet);
 }
 
 
@@ -26,8 +25,6 @@ Game.prototype.initialise = function() {
     this.launcher =  new Launcher(this.game_screen);
     this.fleet = new Fleet(this.game_screen);
 
-    console.log("Fleet on initialise: " + this.fleet);
-
     var bunkerX = 250;
     var bunkerY = 450; //TODO associate bunkerX and bunkerY width of game_screen
     for( var i = 0; i < 3; i++ ){
@@ -38,7 +35,6 @@ Game.prototype.initialise = function() {
 
 
 Game.prototype.update = function() {
-    console.log("Fleet on update: " + this.fleet);
 
     var now = 0;
     var oldTime = 0;
