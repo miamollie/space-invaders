@@ -21,7 +21,6 @@
         <button id="play">Play</button>
         <button id="pause">Pause</button>
         <button id="resume">Resume</button>
-        <button id="update">Update</button>
 
     </div>
 
@@ -38,21 +37,15 @@
         resumeButton.disabled = true;
         var pauseButton = document.getElementById("pause");
         pauseButton.disabled = true;
-        var updateButton = document.getElementById("update");
 
         playButton.onclick = function(){
             game = new Game();
             game.initialise();
-            // game.update();
-            // game.play(); //everything happens in here!
-            // playButton.disabled = true;
-            // pauseButton.disabled = false;
+            game.play(); //everything happens in here!
+            playButton.disabled = true;
+            pauseButton.disabled = false;
         }
 
-
-        updateButton.onclick = function(){
-            game.update();
-        }
         pauseButton.onclick = function(){
 
             pauseButton.disabled = true;

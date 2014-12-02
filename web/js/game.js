@@ -165,12 +165,12 @@ Game.prototype.update = function() {
 
 
 
-
 Game.prototype.play = function() {
 
     //this is the game God thingy mabobby
-    this.clock = setInterval( this.update, 25 );
-    console.log("Fleet on play: " + this.fleet);
+    var t = this;
+    this.clock = setInterval( function(){ t.update(); }, 25 );
+
 
 };
 
