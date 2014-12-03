@@ -16,10 +16,9 @@ function Game(){
 
 
 
+//Initialise the game
 Game.prototype.initialise = function() {
 
-
-    //Initialise the game
     this.game_screen = new GameScreen();
     document.body.appendChild(this.game_screen.dom_element);
     this.launcher =  new Launcher(this.game_screen);
@@ -36,8 +35,8 @@ Game.prototype.initialise = function() {
 
 
 
-    //set up the controls
-    Game.prototype.onkeydown = function(e) {
+//set up the controls
+Game.prototype.onkeydown = function(e) {
     //make launcher go right
     if( e.keyCode == 68 ){
         this.launcher.goRight();
@@ -48,11 +47,23 @@ Game.prototype.initialise = function() {
 
         //launcher fires a missile
     }  else if( e.keyCode == 32 ){
-        this.game_screen.launcherMissiles.push(this.launcher.fireMissile());
+        this.game_screen.launcherMissiles.push(this.fireMissile(this.launcher));
     }
 }
 
 
+
+//Fire an object from your current position
+Game.prototype.fireMissile = function( firingPlayer) {
+    var missile = new Missile(this.game_screen);
+    missile.setX(firingPlayer.getX() + ((firingPlayer.width()/2) - (missile.width()/2) ));
+    missile.setY(firingPlayer.getY());
+    return missile;
+}
+
+
+
+//Update the game state
 Game.prototype.update = function() {
 
     var now = 0;
@@ -83,7 +94,6 @@ Game.prototype.update = function() {
     now = Date.now(); // new date with number of milliseconds since 1970
     timeDif = now - oldTime;
     if( timeDif > fleet.missileFrequency ){
-        console.log("here");
         this.game_screen.invaderMissiles.push(fleet.randomFire());
         oldTime = now; //reset oldTime to now
     }
@@ -115,7 +125,7 @@ Game.prototype.update = function() {
     // check for bunker hits
     if( this.game_screen.launcherMissiles.length > 0 ){
         for( var i = 0; i < this.game_screen.launcherMissiles.length; i++ ){
-            for( var j = 0; j < bunkers.length; j++ ){
+            for( var j = 0; j < this.bunkers.length; j++ ){
                 if( this.bunkers[j].overlaps(this.game_screen.launcherMissiles[i]) ){
                     this.game_screen.dom_element.removeChild(this.game_screen.launcherMissiles[i].dom_element); //Delete the missile from the screen
                     this.game_screen.launcherMissiles.splice(i, 1);
