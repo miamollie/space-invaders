@@ -47,7 +47,7 @@ Game.prototype.onkeydown = function(e) {
 
         //launcher fires a missile
     }  else if( e.keyCode == 32 ){
-        this.game_screen.launcherMissiles.push(this.fireMissile(this.launcher));
+        this.launcherMissiles.push(this.fireMissile(this.launcher));
     }
 }
 
@@ -78,13 +78,13 @@ Game.prototype.update = function() {
 
 
     // //Move the launcher missiles
-    for( var i = 0; i < this.game_screen.launcherMissiles.length; i++ ){
-        this.game_screen.launcherMissiles[i].goUp();
+    for( var i = 0; i < this.launcherMissiles.length; i++ ){
+        this.launcherMissiles[i].goUp();
 
         //if a missile goes off the screen remove it from the array and hide it somehow
-        if( this.game_screen.launcherMissiles[0].getY() <= 0 ){
-            this.game_screen.dom_element.removeChild(this.game_screen.launcherMissiles[0].dom_element);
-            this.game_screen.launcherMissiles.shift();
+        if( this.launcherMissiles[0].getY() <= 0 ){
+            this.game_screen.dom_element.removeChild(this.launcherMissiles[0].dom_element);
+            this.launcherMissiles.shift();
         }
 
     }
@@ -93,19 +93,19 @@ Game.prototype.update = function() {
     // Randomly Fire - at a frequency dictated by the state of the game
     now = Date.now(); // new date with number of milliseconds since 1970
     timeDif = now - oldTime;
-    if( timeDif > fleet.missileFrequency ){
-        this.game_screen.invaderMissiles.push(fleet.randomFire());
+    if( timeDif > this.fleet.missileFrequency ){
+        this.invaderMissiles.push(this.fleet.randomFire());
         oldTime = now; //reset oldTime to now
     }
 
 
     // Move the invader bombs down
-    for( var i = 0; i < this.game_screen.invaderMissiles.length; i++ ){
-        this.game_screen.invaderMissiles[i].goDown();
+    for( var i = 0; i < this.invaderMissiles.length; i++ ){
+        this.invaderMissiles[i].goDown();
         //if a missile goes off the screen remove it from the array and hide it somehow
-        if( this.game_screen.invaderMissiles[0].getY() >= this.game_screen.height() ){
-            this.game_screen.dom_element.removeChild(this.game_screen.invaderMissiles[0].dom_element);
-            this.game_screen.invaderMissiles.shift();
+        if( this.invaderMissiles[0].getY() >= this.game_screen.height() ){
+            this.game_screen.dom_element.removeChild(this.invaderMissiles[0].dom_element);
+            this.invaderMissiles.shift();
         }
     }
 
@@ -113,22 +113,22 @@ Game.prototype.update = function() {
 
 
     // check for invader hits
-    if( this.game_screen.launcherMissiles.length > 0 ){
-        for( var i = 0; i < this.game_screen.launcherMissiles.length; i++ ){
-            if( this.fleet.overlaps(this.game_screen.launcherMissiles[i]) ){
-                this.game_screen.dom_element.removeChild(this.game_screen.launcherMissiles[i].dom_element); //Delete the missile from the screen
-                this.game_screen.launcherMissiles.splice(i, 1); //remove the missile from the array
+    if( this.launcherMissiles.length > 0 ){
+        for( var i = 0; i < this.launcherMissiles.length; i++ ){
+            if( this.fleet.overlaps(this.launcherMissiles[i]) ){
+                this.game_screen.dom_element.removeChild(this.launcherMissiles[i].dom_element); //Delete the missile from the screen
+                this.launcherMissiles.splice(i, 1); //remove the missile from the array
             }
         }
     }
 
     // check for bunker hits
-    if( this.game_screen.launcherMissiles.length > 0 ){
-        for( var i = 0; i < this.game_screen.launcherMissiles.length; i++ ){
+    if( this.launcherMissiles.length > 0 ){
+        for( var i = 0; i < this.launcherMissiles.length; i++ ){
             for( var j = 0; j < this.bunkers.length; j++ ){
-                if( this.bunkers[j].overlaps(this.game_screen.launcherMissiles[i]) ){
-                    this.game_screen.dom_element.removeChild(this.game_screen.launcherMissiles[i].dom_element); //Delete the missile from the screen
-                    this.game_screen.launcherMissiles.splice(i, 1);
+                if( this.bunkers[j].overlaps(this.launcherMissiles[i]) ){
+                    this.game_screen.dom_element.removeChild(this.launcherMissiles[i].dom_element); //Delete the missile from the screen
+                    this.launcherMissiles.splice(i, 1);
                 }
             }
         }
@@ -136,19 +136,19 @@ Game.prototype.update = function() {
 
 
     // check for launcher hits
-    if( this.game_screen.invaderMissiles.length > 0 ){
-        for( var i = 0; i < this.game_screen.invaderMissiles.length; i++ ){
+    if( this.invaderMissiles.length > 0 ){
+        for( var i = 0; i < this.invaderMissiles.length; i++ ){
             //Check for launcher hits
-            if( this.launcher.overlaps(this.game_screen.invaderMissiles[i]) ){
-                this.game_screen.dom_element.removeChild(this.game_screen.invaderMissiles[i].dom_element); //Delete the missile from the screen
-                this.game_screen.invaderMissiles.splice(i, 1); // Remove the missile from the array
+            if( this.launcher.overlaps(this.invaderMissiles[i]) ){
+                this.game_screen.dom_element.removeChild(this.invaderMissiles[i].dom_element); //Delete the missile from the screen
+                this.invaderMissiles.splice(i, 1); // Remove the missile from the array
             }
 
             //Check for bunker hits
             for( var j = 0; j < bunkers.length; j++ ){
-                if( this.bunkers[j].overlaps(this.game_screen.invaderMissiles[i]) ){
-                    this.game_screen.dom_element.removeChild(this.game_screen.invaderMissiles[i].dom_element); //Delete the missile from the screen
-                    this.game_screen.invaderMissiles.splice(i, 1);
+                if( this.bunkers[j].overlaps(this.invaderMissiles[i]) ){
+                    this.game_screen.dom_element.removeChild(this.invaderMissiles[i].dom_element); //Delete the missile from the screen
+                    this.invaderMissiles.splice(i, 1);
 
                 }
             }
@@ -158,8 +158,8 @@ Game.prototype.update = function() {
 
     //Make the invaders Change appearance -  TODO, should this be a function of fleet, whatever the case there is definitely a better way of doing this... but I'm sleepy now
     iconTimeDif = now - oldIconTime;
-    if( iconTimeDif > fleet.changeIcon ){
-        fleet.animate();
+    if( iconTimeDif > this.fleet.changeIcon ){
+        this.fleet.animate();
         oldIconTime = now;
     }
 
