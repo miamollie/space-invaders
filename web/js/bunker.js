@@ -1,10 +1,10 @@
 /* B U N K E R */
-function Bunker(game_screen, x, y){
+function Bunker(gameScreen, x, y){
     SuperElement.apply( this );
 
 
     this.bunkerBlocks = [];
-    this.game_screen = game_screen;
+    this.gameScreen = gameScreen;
 
 
     //make a new DOM element
@@ -12,7 +12,7 @@ function Bunker(game_screen, x, y){
     this.dom_element.setAttribute("class", "bunker");
 
     //add DOM element to the screen
-    game_screen.dom_element.appendChild( this.dom_element );
+    this.gameScreen.dom_element.appendChild( this.dom_element );
 
     this.setX(x);
     this.setY(y);

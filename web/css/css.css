@@ -1,16 +1,18 @@
-#game_screen{
-    background-color: #000;
-    width: 1200px;
-    height: 550px;
-    position: relative;
-    left: 0px;
-    top: 0px;
 
+// S C R E E N
+
+#gameScreen{
+    background-color: #000;
+    position: relative;
+}
+
+#gameScreen button{
+    position: absolute;
 }
 
 .screenType{
     position: absolute;
-    z-index: 100;
+    background-color: #000;
 }
 
 
@@ -18,9 +20,10 @@
     color: #fff;
 }
 
-#startScreen.screenType h1{
-    color: #000;
-}
+
+
+
+// P L A Y E R S
 
 #launcher{
     position: relative;
@@ -41,6 +44,13 @@
     background-color: #fff;
 }
 
+#fleet{
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    top: 0px;
+    left: 0px;
+}
 
 .invader{
     position: absolute;
@@ -73,13 +83,6 @@
 
 /*There are three more types of invader that need to be written*/
 
-#fleet{
-    position: absolute;
-    width: 0px;
-    height: 0px;
-    top: 0px;
-    left: 0px;
-}
 
 
 .bunker{

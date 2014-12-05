@@ -122,7 +122,7 @@ SuperElement.prototype.overlaps = function(otherThing){
 
 // //Any object can fire a missile from its current position
 // SuperElement.prototype.fireMissile = function() {
-//     var missile = new Missile(game_screen); // you might need to put 'this' back into new missiles declaration
+//     var missile = new Missile(gameScreen); // you might need to put 'this' back into new missiles declaration
 //     missile.setX(this.getX() + ((this.width()/2) - (missile.width()/2) ));
 //     missile.setY(this.getY());
 //     return missile;

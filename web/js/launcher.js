@@ -1,22 +1,22 @@
 
 
 /* L A U N C H E R */
-function Launcher(game_screen){
+function Launcher(gameScreen){
     // Inheritance
     SuperElement.call( this);
 
     this.lives = 3;
 
-    this.game_screen = game_screen;
+    this.gameScreen = gameScreen;
 
     //make a new DOM element
     this.dom_element = document.createElement("div");
     this.dom_element.setAttribute("id", "launcher");
 
-    this.game_screen.dom_element.appendChild( this.dom_element );
+    this.gameScreen.appendChild( this.dom_element );
 
-    this.setX(game_screen.width()/2 - this.width()/2);
-    this.setY(game_screen.height() - this.height());
+    this.setX(gameScreen.width()/2 - this.width()/2);
+    this.setY(gameScreen.height() - this.height());
 
 }
 
@@ -41,7 +41,7 @@ Launcher.prototype.goLeft = function() {
 Launcher.prototype.goRight = function() {
 
     var launcher_width = this.width();
-    var right_edge = this.game_screen.width();
+    var right_edge = this.gameScreen.width();
 
     //make sure the launcher stays on the screen
     if(this.getX() >= right_edge - launcher_width){

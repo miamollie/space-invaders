@@ -1,23 +1,22 @@
 
 /* F L E E T */
 
-function Fleet(game_screen){
+function Fleet(gameScreen){
     //inheritance
     SuperElement.call( this );
 
 
     //Display attributes
-    this.game_screen = game_screen;
+    this.gameScreen = gameScreen;
 
     this.dom_element = document.createElement("div");
     this.dom_element.setAttribute("id", "fleet");
 
-    this.game_screen.dom_element.appendChild( this.dom_element );
+console.log("gameScreen: " + this.gameScreen);
+    this.gameScreen.appendChild( this.dom_element );
 
     this.setX(20);
     this.setY(20);
-
-
 
     // Animation Attributes
     this.missileFrequency = 4000; // initially invaders fire roughly every 4 seconds
@@ -87,7 +86,7 @@ Fleet.prototype.constructor = Fleet;
 Fleet.prototype.move = function() {
 
     var current_position = this.getX();
-    var right_edge = this.game_screen.width() - this.width();
+    var right_edge = this.gameScreen.width() - this.width();
     var left_edge = 0;
 
     //if the fleet hits the right edge, go down and change direction
@@ -131,12 +130,12 @@ Fleet.prototype.move = function() {
 };
 
 //Among the remaining invaders, randomly fire
-Fleet.prototype.randomFire = function() {
+Fleet.prototype.randomFire = function(gameScreen) {
 
     var firingInvaderX = Math.floor((Math.random() * (this.invaders.length - 1) + 0)); // pick an invader between 0 and number of remaining invaders in fleet
     var firingInvaderY = Math.floor((Math.random() * (this.invaders[0].length - 1) + 0)); //
-    var missile = new Missile(game_screen);
-    // console.log("invaderX: " +  firingInvaderX + " invaderY" + firingInvaderY);
+    var missile = new Missile(gameScreen);
+    console.log("invaderX: " +  firingInvaderX + " invaderY" + firingInvaderY);
     missile.setX(this.getX() + this.invaders[firingInvaderX][firingInvaderY].getX() + ( (this.invaders[firingInvaderX][firingInvaderY].width()) - (missile.width())) );
     missile.setY(this.getY() + this.invaders[firingInvaderX][firingInvaderY].getY());
     return missile;

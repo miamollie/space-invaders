@@ -1,13 +1,13 @@
 /* M I S S I L E */
-function Missile(game_screen){
+function Missile(gameScreen){
     // Inheritance
     SuperElement.call( this );
 
-    this.game_screen =  game_screen;
+    this.gameScreen =  gameScreen;
     //make a new DOM element
     this.dom_element = document.createElement("div");
     this.dom_element.setAttribute("class", "missile");
-    this.game_screen.dom_element.appendChild( this.dom_element );
+    this.gameScreen.dom_element.appendChild( this.dom_element );
 }
 
 //More inheritance stuff, note that "create()" doesn't work on older engines
