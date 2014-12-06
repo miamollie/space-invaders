@@ -15,8 +15,8 @@ function Launcher(gameScreen){
 
     this.gameScreen.appendChild( this.dom_element );
 
-    this.setX(gameScreen.width()/2 - this.width()/2);
-    this.setY(gameScreen.height() - this.height());
+    this.setX((parseFloat(this.gameScreen.parentNode.style.width))/2 - this.width()/2);
+    this.setY(parseFloat(this.gameScreen.parentNode.style.height) - this.height());
 
 }
 
@@ -41,7 +41,8 @@ Launcher.prototype.goLeft = function() {
 Launcher.prototype.goRight = function() {
 
     var launcher_width = this.width();
-    var right_edge = this.gameScreen.width();
+    var right_edge = parseFloat(this.gameScreen.parentNode.style.width);
+    console.log("right edge: " + right_edge + "game screen: " + this.gameScreen + " width " + this.gameScreen.parentNode.style.width);
 
     //make sure the launcher stays on the screen
     if(this.getX() >= right_edge - launcher_width){

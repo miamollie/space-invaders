@@ -4,7 +4,7 @@
     <link href="/css/css.css" rel="stylesheet" type="text/css">
     <script src="/js/super.js"></script>
     <script src="/js/game.js"></script>
-    <script src="/js/gameScreen.js"></script>
+    <!-- // <script src="/js/gameScreen.js"></script> -->
     <script src="/js/invader.js"></script>
     <script src="/js/launcher.js"></script>
     <script src="/js/fleet.js"></script>
@@ -17,32 +17,39 @@
 </head>
 <body>
 
-    <div id="gameScreen">
+    <div id="gameScreen" class="test">
         <!-- Start Screen -->
         <div id="startScreen" class="screenType">
+
             <button id="play">Play</button>
             <h1>Lucky Lot Invaders</h1>
+
             <p>
                 Controls: <br>
                 Left: 'a'<br>
                 Right: 'd' <br>
                 Fire: 'space'
             </p>
+
         </div>
 
         <!-- Play Screen -->
         <div id="playScreen" class="screenType">
+
             <h1 id="playScreenH1">Paused</h1>
             <button id="pause">Pause</button>
             <button id="resume">Resume</button>
+
         </div>
 
         <!-- End Screen -->
         <div id="endScreen" class="screenType">
+
             <h1>Game Over</h1>
             <h2>Congratulations!</h2>
             <h2>You Lose.</h2>
             <button id="replay">Replay</button>
+
         </div>
 
 
@@ -58,7 +65,6 @@
 
         //Game Screens
         var startScreen = document.getElementById("startScreen");
-        startScreen.style.display = 'block';
 
         var playScreen = document.getElementById("playScreen")
         playScreen.style.display = 'none';
@@ -90,6 +96,7 @@
         pauseButton.onclick = function(){
             pauseButton.style.visibility = 'hidden';
             resumeButton.style.visibility = 'visible';
+            pauseText.style.visibility = 'visible';
             game.pause();
         }
 
@@ -97,6 +104,7 @@
         resumeButton.onclick = function(){
             pauseButton.style.visibility = 'visible';
             resumeButton.style.visibility = 'hidden';
+            pauseText.style.visibility = 'hidden';
             game.play();
         }
 
@@ -113,8 +121,6 @@
     };
 
 
-    // TODO  - display/hide of divs should be a part of the play/pause/resume game methods? because game should be the thing that has a reference to the gameScreen div
-
 
     window.onresize = function(){
     //Set the width and height of the game screen
@@ -125,7 +131,6 @@
         gameScreen.style.width = windowWidth + "px";
         gameScreen.style.height = windowHeight + "px";
 
-        console.log("Gamescreen: " + gameScreen + "game screen height: " + windowHeight + " gamescreen width : " + windowWidth);
     };
 
     var handler = window.onresize;

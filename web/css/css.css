@@ -1,10 +1,6 @@
 
-// S C R E E N
+ /*S C R E E N*/
 
-#gameScreen{
-    background-color: #000;
-    position: relative;
-}
 
 #gameScreen button{
     position: absolute;
@@ -12,37 +8,24 @@
 
 .screenType{
     position: absolute;
-    background-color: #000;
 }
 
 
-.screenType h1{
+.screenType h1, h2, p{
     color: #fff;
 }
 
 
-
-
-// P L A Y E R S
-
-#launcher{
+#gameScreen{
+    background-color: #000;
     position: relative;
-    width: 80px;
-    height: 20px;
-    left: 0px;
-    top: 0px;
-    background-color: #00FF00;
 }
 
 
-.missile{
-    position: absolute;
-    width: 3px;
-    height: 10px;
-    left: 0px;
-    top: 0px;
-    background-color: #fff;
-}
+
+/*P L A Y E R S*/
+
+
 
 #fleet{
     position: absolute;
@@ -52,6 +35,14 @@
     left: 0px;
 }
 
+#launcher{
+    position: absolute;
+    width: 80px;
+    height: 20px;
+    left: 0px;
+    top: 0px;
+    background-color: #00FF00;
+}
 .invader{
     position: absolute;
     width: 40px;
@@ -63,6 +54,18 @@
     background-size: contain;
     background-repeat: no-repeat;
 }
+
+
+.missile{
+    position: absolute;
+    width: 3px;
+    height: 10px;
+    left: 0px;
+    top: 0px;
+    background-color: #fff;
+    z-index: 100;
+}
+
 
 .typeOne.first{
     background-image: url('/images/invader1a.png');

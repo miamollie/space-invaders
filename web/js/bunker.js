@@ -12,7 +12,7 @@ function Bunker(gameScreen, x, y){
     this.dom_element.setAttribute("class", "bunker");
 
     //add DOM element to the screen
-    this.gameScreen.dom_element.appendChild( this.dom_element );
+    this.gameScreen.appendChild( this.dom_element );
 
     this.setX(x);
     this.setY(y);

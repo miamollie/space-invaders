@@ -23,8 +23,6 @@ function Game(){
 
     // this.threshold = 400; // TODO what should this value be; if invaders get below this line it's game Over
 
-
-
 }
 
 
@@ -94,7 +92,7 @@ Game.prototype.update = function() {
 
         //if a missile goes off the screen remove it from the array and hide it somehow
         if( this.launcherMissiles[0].getY() <= 0 ){
-            this.gameScreen.dom_element.removeChild(this.launcherMissiles[0].dom_element);
+            this.gameScreen.removeChild(this.launcherMissiles[0].dom_element);
             this.launcherMissiles.shift();
         }
 
@@ -114,8 +112,8 @@ Game.prototype.update = function() {
     for( var i = 0; i < this.invaderMissiles.length; i++ ){
         this.invaderMissiles[i].goDown();
         //if a missile goes off the screen remove it from the array and hide it somehow
-        if( this.invaderMissiles[0].getY() >= this.gameScreen.height() ){
-            this.gameScreen.dom_element.removeChild(this.invaderMissiles[0].dom_element);
+        if( this.invaderMissiles[0].getY() >= parseFloat(this.gameScreen.parentNode.style.height) ){
+            this.gameScreen.removeChild(this.invaderMissiles[0].dom_element);
             this.invaderMissiles.shift();
         }
     }
@@ -127,7 +125,7 @@ Game.prototype.update = function() {
     if( this.launcherMissiles.length > 0 ){
         for( var i = 0; i < this.launcherMissiles.length; i++ ){
             if( this.fleet.overlaps(this.launcherMissiles[i]) ){
-                this.gameScreen.dom_element.removeChild(this.launcherMissiles[i].dom_element); //Delete the missile from the screen
+                this.gameScreen.removeChild(this.launcherMissiles[i].dom_element); //Delete the missile from the screen
                 this.launcherMissiles.splice(i, 1); //remove the missile from the array
             }
         }
@@ -138,7 +136,7 @@ Game.prototype.update = function() {
         for( var i = 0; i < this.launcherMissiles.length; i++ ){
             for( var j = 0; j < this.bunkers.length; j++ ){
                 if( this.bunkers[j].overlaps(this.launcherMissiles[i]) ){
-                    this.gameScreen.dom_element.removeChild(this.launcherMissiles[i].dom_element); //Delete the missile from the screen
+                    this.gameScreen.removeChild(this.launcherMissiles[i].dom_element); //Delete the missile from the screen
                     this.launcherMissiles.splice(i, 1);
                 }
             }
@@ -151,14 +149,14 @@ Game.prototype.update = function() {
         for( var i = 0; i < this.invaderMissiles.length; i++ ){
             //Check for launcher hits
             if( this.launcher.overlaps(this.invaderMissiles[i]) ){
-                this.gameScreen.dom_element.removeChild(this.invaderMissiles[i].dom_element); //Delete the missile from the screen
+                this.gameScreen.removeChild(this.invaderMissiles[i].dom_element); //Delete the missile from the screen
                 this.invaderMissiles.splice(i, 1); // Remove the missile from the array
             }
 
             //Check for bunker hits
             for( var j = 0; j < this.bunkers.length; j++ ){
                 if( this.bunkers[j].overlaps(this.invaderMissiles[i]) ){
-                    this.gameScreen.dom_element.removeChild(this.invaderMissiles[i].dom_element); //Delete the missile from the screen
+                    this.gameScreen.removeChild(this.invaderMissiles[i].dom_element); //Delete the missile from the screen
                     this.invaderMissiles.splice(i, 1);
 
                 }

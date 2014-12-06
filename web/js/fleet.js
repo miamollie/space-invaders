@@ -12,7 +12,7 @@ function Fleet(gameScreen){
     this.dom_element = document.createElement("div");
     this.dom_element.setAttribute("id", "fleet");
 
-console.log("gameScreen: " + this.gameScreen);
+    console.log("gameScreen: " + this.gameScreen);
     this.gameScreen.appendChild( this.dom_element );
 
     this.setX(20);
@@ -86,7 +86,7 @@ Fleet.prototype.constructor = Fleet;
 Fleet.prototype.move = function() {
 
     var current_position = this.getX();
-    var right_edge = this.gameScreen.width() - this.width();
+    var right_edge = parseFloat(this.gameScreen.parentNode.style.width) - this.width();
     var left_edge = 0;
 
     //if the fleet hits the right edge, go down and change direction
