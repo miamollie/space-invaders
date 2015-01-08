@@ -17,19 +17,22 @@
 </head>
 <body>
 
-    <div id="gameScreen" class="test">
+    <div id="gameScreen">
         <!-- Start Screen -->
         <div id="startScreen" class="screenType">
 
             <button id="play">Play</button>
-            <h1>Lucky Lot Invaders</h1>
+            <div>
+                <h1>Lucky Lot Invaders</h1>
 
-            <p>
-                Controls: <br>
-                Left: 'a'<br>
-                Right: 'd' <br>
-                Fire: 'space'
-            </p>
+                <p>
+                    Controls: <br>
+                    Left: 'a'<br>
+                    Right: 'd' <br>
+                    Fire: 'space'
+                </p>
+
+            </div>
 
         </div>
 
@@ -47,7 +50,7 @@
 
             <h1>Game Over</h1>
             <h2>Congratulations!</h2>
-            <h2>You Lose.</h2>
+            <h2>You Lose</h2>
             <button id="replay">Replay</button>
 
         </div>
@@ -58,10 +61,17 @@
 
     <script>
     var game = null;
+    var windowWidth;
+    var windowHeight;
+
 
     window.onload = function(){
         //Game Object
         game = new Game();
+
+        windowWidth = window.innerWidth - 20;
+        windowHeight = window.innerHeight - 20;
+
 
         //Game Screens
         var startScreen = document.getElementById("startScreen");
@@ -84,7 +94,7 @@
 
         //Play Button
         playButton.onclick = function(){
-            game.initialise();
+            game.initialise(windowWidth, windowHeight); //initialise needs to be passed the widthand height of the screen
             game.play(); //everything happens in here!
             startScreen.style.display = 'none';
             playScreen.style.display = 'block';
@@ -124,8 +134,8 @@
 
     window.onresize = function(){
     //Set the width and height of the game screen
-        var windowWidth = window.innerWidth;
-        var windowHeight = window.innerHeight;
+        windowWidth = window.innerWidth - 20;
+        windowHeight = window.innerHeight - 20;
 
         var gameScreen = document.getElementById("gameScreen");
         gameScreen.style.width = windowWidth + "px";
@@ -135,6 +145,7 @@
 
     var handler = window.onresize;
     handler();
+
 
 
 

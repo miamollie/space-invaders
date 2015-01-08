@@ -21,6 +21,10 @@ function Bunker(gameScreen, x, y){
     //First 12 go in a row TODO make bunker legs
     //TODO optimize so height and width of bunker is set dynamically
 
+
+
+
+
     var x = 0;
     var y = 0;
     var bunkerWidth = 0;
@@ -32,14 +36,13 @@ function Bunker(gameScreen, x, y){
 
     	if( i % 6 == 0 ){
 			y += this.bunkerBlocks[i - 1].height();
-            bunkerWidth = i * this.bunkerBlocks[i - 1].width();
             x = 0;
     	}
 
     	bunkerHeight = y;
     }
 
-    this.setWidth(bunkerWidth - this.getX());
+    this.setWidth(this.bunkerBlocks[0].width() * 6 );
     this.setHeight(bunkerHeight - this.getY());
 }
 

@@ -28,18 +28,27 @@ function Game(){
 
 
 //Initialise the game
-Game.prototype.initialise = function() {
+Game.prototype.initialise = function(windowWidth, windowHeight) {
 
     this.gameScreen = document.getElementById('playScreen');
 
     this.launcher =  new Launcher(this.gameScreen);
     this.fleet = new Fleet(this.gameScreen);
 
-    var bunkerX = 250;
+    //Determine what the bunker margins should be
+    var margin;
+    var gameScreenWidth = parseFloat(this.gameScreen.parentNode.style.width);
+
+    var bunkerX = 0;
     var bunkerY = 450; //TODO associate bunkerX and bunkerY width of gameScreen
     for( var i = 0; i < 3; i++ ){
         this.bunkers.push(new Bunker(this.gameScreen, bunkerX, bunkerY));
-        bunkerX += 250;
+
+        margin =  (gameScreenWidth/3 - parseFloat(this.bunkers[0].dom_element.style.width)) / 2;
+        this.bunkers[i].dom_element.style.marginLeft = margin + "px";
+        this.bunkers[i].dom_element.style.marginRight = margin + "px";
+
+        bunkerX += gameScreenWidth/3;
     }
 };
 

@@ -1,26 +1,43 @@
 
+
  /*S C R E E N*/
-
-
-#gameScreen button{
-    position: absolute;
-}
-
-.screenType{
-    position: absolute;
-}
-
-
-.screenType h1, h2, p{
-    color: #fff;
-}
-
 
 #gameScreen{
     background-color: #000;
     position: relative;
+
 }
 
+#gameScreen button{
+    position: absolute;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100px;
+    left: 46%;
+    border: 2px solid white;
+    background-color: transparent;
+    color: #fff;
+    font-size: 1.3em;
+
+}
+
+.screenType{
+    position: absolute;
+    width: 100%;
+
+}
+
+#startScreen > div{
+    margin-top: 200px;
+}
+
+.screenType h1, h2, p{
+    color: #fff;
+    font-family: courier;
+    text-align: center;
+
+}
 
 
 /*P L A Y E R S*/
@@ -94,6 +111,8 @@
     height: 40px;
     left: 0px;
     top: 0px;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 

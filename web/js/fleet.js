@@ -15,8 +15,8 @@ function Fleet(gameScreen){
     console.log("gameScreen: " + this.gameScreen);
     this.gameScreen.appendChild( this.dom_element );
 
-    this.setX(20);
-    this.setY(20);
+    this.setX(0);
+    this.setY(47);
 
     // Animation Attributes
     this.missileFrequency = 4000; // initially invaders fire roughly every 4 seconds
