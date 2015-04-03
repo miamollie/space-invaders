@@ -17,14 +17,6 @@ function Bunker(gameScreen, x, y){
     this.setX(x);
     this.setY(y);
 
-    //set up the bunker blocks to build the bunker; using 20 as initial value.
-    //First 12 go in a row TODO make bunker legs
-    //TODO optimize so height and width of bunker is set dynamically
-
-
-
-
-
     var x = 0;
     var y = 0;
     var bunkerWidth = 0;
@@ -52,6 +44,13 @@ Bunker.prototype = Object.create(SuperElement.prototype);
 Bunker.prototype.constructor = Bunker;
 
 
+//Bunker's GetX has to take into account margins... this is probably super hacky,
+
+Bunker.prototype.getX = function( ) {
+    x = parseFloat(getComputedStyle( this.dom_element, null).left);
+    return x;
+};
+
 //Bunker's Very own special overlaps methog
 Bunker.prototype.overlaps = function(otherThing){
 
@@ -64,6 +63,7 @@ Bunker.prototype.overlaps = function(otherThing){
     //Height Variables
     var element1_y = this.getY();
     var element2_y = otherThing.getY();
+    // console.log("Missile Y: " + otherThing.getY());
     var element1_y_h = this.getY() + this.height();
     var element2_y_h = otherThing.getY() + otherThing.height()
 

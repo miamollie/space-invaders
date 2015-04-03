@@ -44,16 +44,16 @@
 		this.statuses = []; // A 2D array of 0 and 1 where 1 indicates invader present and 2 indicates invader absent
 
 		 //Populate the array
-		for( var i = 0; i < 5; i++ ){
+		 for( var i = 0; i < 5; i++ ){
 		 	this.statuses[i] = new Array(10);
 
-			for( var j = 0; j < 10; j++ ){
+		 	for( var j = 0; j < 10; j++ ){
 		 		this.statuses[i][j] = 1;
 		 	}
 		 }
 
 
-		this.extremities = {
+		 this.extremities = {
 	        left: { r: 4, c: 0 }, //leftmost extremity starts at bottom left
 	        right: {r: 4, c: 9 }, //rightmost extremity starts at bottom right
 	        bottom: 0
@@ -83,7 +83,6 @@
 
 
 	Fleet.prototype.printExtremities = function(){
-		console.log("print extremities");
 		var string = "Fleet Extremities: <br>";
 		string+= "Left: Row " + this.extremities.left.r + " Column " + this.extremities.left.c + "<br>";
 		string+= "Right: Row " + this.extremities.right.r + " Column " + this.extremities.right.c + "<br>";
@@ -95,23 +94,22 @@
 	//Update the extremities of the fleet based on remaining invaders
 	Fleet.prototype.updateExtremities =  function() {
 
-		console.log("update extremities");
 
-	     var currentLeftExtremity = {
-	     	r: 0,
-	     	c: this.statuses[0].length
-	     };
+		var currentLeftExtremity = {
+			r: 0,
+			c: this.statuses[0].length
+		};
 
-	     var currentRightExtremity = {
-	     	r: 0,
-	     	c: 0
-	     };
+		var currentRightExtremity = {
+			r: 0,
+			c: 0
+		};
 
 
-	    var currentBottomExtremity = this.extremities.bottom;
+		var currentBottomExtremity = this.extremities.bottom;
 
-	    var tempLeft = 0;
-	    var tempRight = 0;
+		var tempLeft = 0;
+		var tempRight = 0;
 
 	    //Loop through rows starting at the top
 
@@ -121,27 +119,24 @@
 		    tempLeft = this.statuses[r].indexOf(1);
 
 		    if( (tempLeft != (-1)) && (tempLeft <= currentLeftExtremity.c)){
-		    	console.log("left update");
-			    //set this row's left as the leftmost left
-			    currentLeftExtremity.c =  tempLeft;
-			    currentLeftExtremity.r = r;
-		 	}
+		    			    //set this row's left as the leftmost left
+		    			    currentLeftExtremity.c =  tempLeft;
+		    			    currentLeftExtremity.r = r;
+		    			}
 
 
 		     //Find last occurrence of 0 in row r
-		    tempRight = this.statuses[r].lastIndexOf(1);
+		     tempRight = this.statuses[r].lastIndexOf(1);
 
-		    if( (tempRight != (-1)) && (tempRight >= currentRightExtremity.c)){
-		    	console.log("right update");
-		         //set this row's left as the leftmost left
-		        currentRightExtremity.c =  tempRight;
-		        currentRightExtremity.r = r;
-		    }
+		     if( (tempRight != (-1)) && (tempRight >= currentRightExtremity.c)){
+		    		         //set this row's left as the leftmost left
+		    		         currentRightExtremity.c =  tempRight;
+		    		         currentRightExtremity.r = r;
+		    		     }
 
 		     //find out if the whole row is zeros
 
 		    if (tempRight == (-1)){ // i.e. if there are no 1s in the row
-		    	console.log("bottom update");
 		    	currentBottomExtremity = r -1;
 		    }
 
@@ -152,17 +147,14 @@
 	    //if an update to the extremities is detected, update height and width accordingly
 	    if( (this.extremities.left.r > currentLeftExtremity.r) || (this.extremities.left.c != currentLeftExtremity.c) ){
 	        // update the coordinates of all the invaders and reduce the width of the DOM element
-	        console.log("Left side width must be updated: "  + this.extremities.left.r +  " " + this.extremities.left.c + " New: " + currentLeftExtremity.r + " " + currentLeftExtremity.c);
 	        this.extremities.left.r =  currentLeftExtremity.r;
 	        this.extremities.left.c = currentLeftExtremity.c;
 	        updateLeft = true;
 	    }
 
 
-	    // console.log("this row " + this.extremities.right.r + " current row: " + currentRightExtremity.r + "  this column: " +  this.extremities.right.c + " current column: " + currentRightExtremity.c);
 	    if( (this.extremities.right.r < currentRightExtremity.r) || (this.extremities.right.c != currentRightExtremity.c)){
 	        // update the coordinates of all the invaders and reduce the width of the DOM element
-	        console.log("Right side width must be updated -  Current: " + this.extremities.right.r +  " " + this.extremities.right.c + " New: " + currentRightExtremity.r + " " + currentRightExtremity.c);
 	        this.extremities.right.r =  currentRightExtremity.r;
 	        this.extremities.right.c = currentRightExtremity.c;
 	        updateRight = true;
@@ -205,6 +197,6 @@
 
 
 
-</script>
+	</script>
 </body>
 </html>

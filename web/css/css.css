@@ -10,16 +10,31 @@
 
 #gameScreen button{
     position: absolute;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
+    z-index: 100;
+    margin: 10px;
     width: 100px;
     left: 46%;
     border: 2px solid white;
     background-color: transparent;
     color: #fff;
     font-size: 1.3em;
+}
 
+#gameScreen h2{
+    display: inline;
+    margin: 10px;
+}
+#gameScreen #lives{
+    float: right;
+}
+
+#gameScreen #score{
+    float: left;
+}
+
+#endScreen h2{
+    font-size: 2em;
+    display: block;
 }
 
 .screenType{
@@ -28,14 +43,15 @@
 
 }
 
-#startScreen > div{
+#startScreen div, #endScreen div{
     margin-top: 200px;
 }
 
-.screenType h1, h2, p{
+.screenType h1, h2, p, span{
     color: #fff;
     font-family: courier;
     text-align: center;
+    display: block;
 
 }
 
@@ -48,12 +64,12 @@
     position: absolute;
     width: 0px;
     height: 0px;
-    top: 0px;
+    top: 50px;
     left: 0px;
 }
 
 #launcher{
-    position: absolute;
+    position: relative;
     width: 80px;
     height: 20px;
     left: 0px;
@@ -62,8 +78,8 @@
 }
 .invader{
     position: absolute;
-    width: 40px;
-    height: 30px;
+    width: 55px;
+    height: 45px;
     left: 0px;
     top: 0px;
     margin-left: 20px;
@@ -85,11 +101,11 @@
 
 
 .typeOne.first{
-    background-image: url('/images/invader1a.png');
+    background-image: url('/images/invader1a2.png');
 }
 
 .typeOne.second{
-    background-image: url('/images/invader1b.png');
+    background-image: url('/images/invader1b2.png');
 }
 
 

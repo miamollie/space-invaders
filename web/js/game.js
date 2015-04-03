@@ -21,7 +21,7 @@ function Game(){
     this.oldIconTime = 0;
 
 
-    // this.threshold = 400; // TODO what should this value be; if invaders get below this line it's game Over
+    // this.threshold = 400; // TODO what should this value be; if invaders get below this line it's game Over!
 
 }
 
@@ -40,7 +40,7 @@ Game.prototype.initialise = function(windowWidth, windowHeight) {
     var gameScreenWidth = parseFloat(this.gameScreen.parentNode.style.width);
 
     var bunkerX = 0;
-    var bunkerY = 450; //TODO associate bunkerX and bunkerY width of gameScreen
+    var bunkerY = 450; //TODO associate bunkerX and bunkerY with width of gameScreen
     for( var i = 0; i < 3; i++ ){
         this.bunkers.push(new Bunker(this.gameScreen, bunkerX, bunkerY));
 
@@ -54,25 +54,6 @@ Game.prototype.initialise = function(windowWidth, windowHeight) {
 
 
 
-
-//set up the controls
-Game.prototype.onkeydown = function(e) {
-    //make launcher go right
-    if( e.keyCode == 68 ){
-        this.launcher.goRight();
-
-        //make launcher go left
-    } else if( e.keyCode == 65 ){
-        this.launcher.goLeft();
-
-        //launcher fires a missile
-    }  else if( e.keyCode == 32 ){
-        this.launcherMissiles.push(this.fireMissile(this.launcher));
-    }
-}
-
-
-
 //Fire an object from your current position
 Game.prototype.fireMissile = function( firingPlayer) {
     var missile = new Missile(this.gameScreen);
@@ -81,6 +62,19 @@ Game.prototype.fireMissile = function( firingPlayer) {
     return missile;
 }
 
+
+// Update and display the new player score
+Game.prototype.updateScore = function( ) {
+    this.score += 10;
+    var scoreHolder = document.getElementById("score");
+    scoreHolder.innerHTML =  "SCORE: " + this.score;
+}
+// Update and display the new player score
+Game.prototype.updateLives = function( ) {
+    console.log("this.launcher.lives: " + this.launcher.lives);
+    var lifeHolder = document.getElementById('lives'); //get the span inside the score h2 tag
+    lifeHolder.innerHTML = "LIVES: " + this.launcher.lives;
+}
 
 
 //Update the game state
@@ -95,7 +89,7 @@ Game.prototype.update = function() {
     this.fleet.move();
 
 
-    // //Move the launcher missiles
+    //Move the launcher missiles
     for( var i = 0; i < this.launcherMissiles.length; i++ ){
         this.launcherMissiles[i].goUp();
 
@@ -128,22 +122,20 @@ Game.prototype.update = function() {
     }
 
 
-
-
     // check for invader hits
-    if( this.launcherMissiles.length > 0 ){
-        for( var i = 0; i < this.launcherMissiles.length; i++ ){
-            if( this.fleet.overlaps(this.launcherMissiles[i]) ){
+    for( var i = 0; i < this.launcherMissiles.length; i++ ){
+        if( this.fleet.overlaps(this.launcherMissiles[i]) ){
                 this.gameScreen.removeChild(this.launcherMissiles[i].dom_element); //Delete the missile from the screen
                 this.launcherMissiles.splice(i, 1); //remove the missile from the array
-            }
+                this.updateScore(); //update the player score and print it to the screen
         }
     }
 
-    // check for bunker hits
-    if( this.launcherMissiles.length > 0 ){
-        for( var i = 0; i < this.launcherMissiles.length; i++ ){
-            for( var j = 0; j < this.bunkers.length; j++ ){
+
+    // check for bunker hits by launcher
+    for( var i = 0; i < this.launcherMissiles.length; i++ ){
+        for( var j = 0; j < this.bunkers.length; j++ ){
+            if( this.launcherMissiles.length > 0 ){     //This IF statement is necessary because otherwise at line :170 we might splice off the last in the array
                 if( this.bunkers[j].overlaps(this.launcherMissiles[i]) ){
                     this.gameScreen.removeChild(this.launcherMissiles[i].dom_element); //Delete the missile from the screen
                     this.launcherMissiles.splice(i, 1);
@@ -153,17 +145,17 @@ Game.prototype.update = function() {
     }
 
 
-    // check for launcher hits
-    if( this.invaderMissiles.length > 0 ){
-        for( var i = 0; i < this.invaderMissiles.length; i++ ){
-            //Check for launcher hits
-            if( this.launcher.overlaps(this.invaderMissiles[i]) ){
-                this.gameScreen.removeChild(this.invaderMissiles[i].dom_element); //Delete the missile from the screen
-                this.invaderMissiles.splice(i, 1); // Remove the missile from the array
-            }
+    // // check for launcher hits
+    for( var i = 0; i < this.invaderMissiles.length; i++ ){
+        if( this.launcher.overlaps(this.invaderMissiles[i]) ){
+            this.gameScreen.removeChild(this.invaderMissiles[i].dom_element); //Delete the missile from the screen
+            this.invaderMissiles.splice(i, 1); // Remove the missile from the array
+            this.updateLives();
+        }
 
-            //Check for bunker hits
-            for( var j = 0; j < this.bunkers.length; j++ ){
+        //Check for bunker hits by invaders
+        for( var j = 0; j < this.bunkers.length; j++ ){
+            if( this.invaderMissiles.length > 0 ){
                 if( this.bunkers[j].overlaps(this.invaderMissiles[i]) ){
                     this.gameScreen.removeChild(this.invaderMissiles[i].dom_element); //Delete the missile from the screen
                     this.invaderMissiles.splice(i, 1);
@@ -172,6 +164,7 @@ Game.prototype.update = function() {
             }
         }
     }
+
 
 
     //Make the invaders Change appearance -  TODO, should this be a function of fleet, whatever the case there is definitely a better way of doing this... but I'm sleepy now
@@ -184,19 +177,57 @@ Game.prototype.update = function() {
     //Player has lost -- end game
     if( (this.launcher.lives <= 0) || (this.fleet.getY() + this.fleet.height() > this.threshold) ){
         //End the game
-        this.end();
         this.gameResult = false;
+        this.pause();
     }
 
     //Player has won -- end game
-    if( (this.fleet.invaders.length == 0) ){
+    if( (this.fleet.invaders.length <= 0) ){
         //End the game
-        this.end();
         this.gameResult = true;
+        this.pause();
+    }
+
+    //Display screen for end of game
+    var endMessage  =  document.getElementById("endMessage");
+    var pauseButton  =  document.getElementById("pause");
+    var replayButton  =  document.getElementById("replay");
+    console.log("game result: " + game.gameResult);
+    if ( game.gameResult!= null ) {
+        console.log("here");
+        if ( this.gameResult )  {
+            endMessage.innerHTML = "Congratulations!";
+        } else if ( !this.gameResult ) {
+            endMessage.innerHTML = "Boo... you lose.";
+        }
+
+        endScreen.style.display = 'block';
+        playScreen.style.display = 'none';
+        pauseButton.style.visibility = 'hidden';
+        replayButton.style.visibility = 'visible'; //replay button becomes visible
+
     }
 
 };
 
+
+//set up the controls
+Game.prototype.onkeydown = function(e) {
+    //make launcher go right
+    if( e.keyCode == 68 ){
+        this.launcher.goRight();
+
+        //make launcher go left
+    } else if( e.keyCode == 65 ){
+        this.launcher.goLeft();
+
+        //launcher fires a missile
+    }  else if( e.keyCode == 32 ){
+        var missile = this.fireMissile(this.launcher);
+        this.launcherMissiles.push(missile);
+    }
+
+}
 
 
 Game.prototype.play = function() {
@@ -205,35 +236,15 @@ Game.prototype.play = function() {
     var t = this;
     this.clock = setInterval( function(){ t.update(); }, 25 );
 
-    //TO do: this.onkeydown() should be called here instead of in si.html
-
 };
 
 Game.prototype.pause = function() {
     //stop the clock
     clearInterval(this.clock);
-
-    //stop the controls -  somehow overwrite onkeydown() function?
-
-
 };
 
 
 
-Game.prototype.end = function() {
-    //Pause the game and stop the controls
-    this.pause();
-
-    //Delete all remaining invaders, if there are any
-
-    //Print ending message .... var endScreen  =  this.gameScreen.parentNode.findChild by id 'end screen'. end screen.find child h1. show/hide
-    if (this.gameResult){
-        //Unhide winning message
-    } else {
-        //unhide losing message
-    }
-
-};
 
 
 

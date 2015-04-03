@@ -42,7 +42,6 @@ Launcher.prototype.goRight = function() {
 
     var launcher_width = this.width();
     var right_edge = parseFloat(this.gameScreen.parentNode.style.width);
-    console.log("right edge: " + right_edge + "game screen: " + this.gameScreen + " width " + this.gameScreen.parentNode.style.width);
 
     //make sure the launcher stays on the screen
     if(this.getX() >= right_edge - launcher_width){
@@ -58,8 +57,6 @@ Launcher.prototype.goRight = function() {
 
 Launcher.prototype.receivedHit = function(otherThing){
     this.lives --;
-    console.log("launcher hit, remaining lives: " + this.lives);
-
 }
 
 

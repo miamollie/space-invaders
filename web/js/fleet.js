@@ -12,14 +12,13 @@ function Fleet(gameScreen){
     this.dom_element = document.createElement("div");
     this.dom_element.setAttribute("id", "fleet");
 
-    console.log("gameScreen: " + this.gameScreen);
     this.gameScreen.appendChild( this.dom_element );
 
     this.setX(0);
-    this.setY(47);
+    this.setY(70);
 
     // Animation Attributes
-    this.missileFrequency = 4000; // initially invaders fire roughly every 4 seconds
+    this.missileFrequency = 3000; // initially invaders fire roughly every 4 seconds
     this.changeIcon = 500;
 
     //Speed of movement
@@ -131,14 +130,14 @@ Fleet.prototype.move = function() {
 
 //Among the remaining invaders, randomly fire
 Fleet.prototype.randomFire = function(gameScreen) {
-
-    var firingInvaderX = Math.floor((Math.random() * (this.invaders.length - 1) + 0)); // pick an invader between 0 and number of remaining invaders in fleet
-    var firingInvaderY = Math.floor((Math.random() * (this.invaders[0].length - 1) + 0)); //
-    var missile = new Missile(gameScreen);
-    console.log("invaderX: " +  firingInvaderX + " invaderY" + firingInvaderY);
-    missile.setX(this.getX() + this.invaders[firingInvaderX][firingInvaderY].getX() + ( (this.invaders[firingInvaderX][firingInvaderY].width()) - (missile.width())) );
-    missile.setY(this.getY() + this.invaders[firingInvaderX][firingInvaderY].getY());
-    return missile;
+    if( this.invaders.length > 0) {
+        var firingInvaderX = Math.floor((Math.random() * (this.invaders.length - 1) + 0)); // pick an invader between 0 and number of remaining invaders in fleet
+        var firingInvaderY = Math.floor((Math.random() * (this.invaders[0].length - 1) + 0)); //
+        var missile = new Missile(gameScreen);
+        missile.setX(this.getX() + this.invaders[firingInvaderX][firingInvaderY].getX() + ( (this.invaders[firingInvaderX][firingInvaderY].width()) - (missile.width())) );
+        missile.setY(this.getY() + this.invaders[firingInvaderX][firingInvaderY].getY());
+        return missile;
+    }
 
 }
 
@@ -280,7 +279,6 @@ Fleet.prototype.updateExtremities =  function() {
             tempLeft = this.statuses[r].indexOf(1);
 
             if( (tempLeft != (-1)) && (tempLeft <= currentLeftExtremity.c)){
-                console.log("left update");
                 //set this row's left as the leftmost left
                 currentLeftExtremity.c =  tempLeft;
                 currentLeftExtremity.r = r;
@@ -291,7 +289,6 @@ Fleet.prototype.updateExtremities =  function() {
              tempRight = this.statuses[r].lastIndexOf(1);
 
              if( (tempRight != (-1)) && (tempRight >= currentRightExtremity.c)){
-                console.log("right update");
                  //set this row's left as the leftmost left
                  currentRightExtremity.c =  tempRight;
                  currentRightExtremity.r = r;
@@ -300,7 +297,6 @@ Fleet.prototype.updateExtremities =  function() {
              //find out if the whole row is zeros
 
             if (tempRight == (-1)){ // i.e. if there are no 1s in the row
-                console.log("bottom update");
                 currentBottomExtremity = r -1;
             }
 

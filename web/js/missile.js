@@ -10,19 +10,16 @@ function Missile(gameScreen){
     this.gameScreen.appendChild( this.dom_element );
 }
 
-//More inheritance stuff, note that "create()" doesn't work on older engines
+//Inheritance
 Missile.prototype = Object.create(SuperElement.prototype);
 Missile.prototype.constructor = Missile;
 
-/*What does a Missile do?!*/
-
 //Move up the Screen
-
 Missile.prototype.goUp = function() {
-    this.setY(this.getY()-2);
+    this.setY(this.getY()-5);
 };
 
-
+//Move down the Screen
 Missile.prototype.goDown = function() {
-    this.setY(this.getY()+2);
+    this.setY(this.getY()+5);
 };
